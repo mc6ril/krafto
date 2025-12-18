@@ -1,0 +1,219 @@
+---
+alwaysApply: true
+name: "Clean Architecture — Strict Layer Separation"
+description: "Maintain strict Clean Architecture with clear separation between Domain, Usecases, Infrastructure, and Presentation layers. No business logic in UI or infrastructure."
+---
+
+# Intent
+
+Maintain strict Clean Architecture with clear separation of responsibilities between Domain, Usecases, Infrastructure, and Presentation. No business logic should be in the UI or infrastructure.
+
+## CRITICAL RULES - ARCHITECTURE NEVER OPTIONAL
+
+### 1. Layer Separation - STRICT ENFORCEMENT
+
+-   **ALWAYS** respect layer separation: Domain → Usecases → Infrastructure → Presentation
+-   **NEVER** mix responsibilities between layers
+-   **ALWAYS** follow unidirectional flow: UI → Hooks → Usecases → Repositories → Supabase
+-   **NEVER** reverse the flow (e.g., Infrastructure → Presentation)
+
+### 2. Domain Layer (core/domain) - PURE TYPESCRIPT ONLY
+
+-   **ALWAYS** place business types/interfaces in `core/domain/`
+-   **ALWAYS** place pure business rules in `core/domain/` (e.g., `isLowStock(product)`)
+-   **NEVER** import Supabase, React, Zustand, React Query, or Next.js in the domain
+-   **NEVER** put infrastructure-dependent logic in the domain
+-   **ALWAYS** keep the domain pure TypeScript without external dependencies
+
+### 3. Usecases Layer (core/usecases) - BUSINESS LOGIC ORCHESTRATION
+
+-   **ALWAYS** create pure functions that orchestrate business logic
+-   **ALWAYS** pass repositories (ports) as parameters to usecases
+-   **ALWAYS** return domain data from usecases
+-   **NEVER** import Supabase directly in a usecase
+-   **NEVER** import React, Zustand, or Next.js in a usecase
+-   **ALWAYS** use ports (interfaces) to access data
+
+**Mandatory structure example:**
+
+```typescript
+export async function listProducts(repo: ProductRepository) {
+    return repo.list();
+}
+```
+
+### 4. Ports Layer (core/ports) - REPOSITORY CONTRACTS
+
+-   **ALWAYS** define repository interfaces in `core/ports/`
+-   **ALWAYS** name ports with the "Repository" suffix (e.g., `ProductRepository`)
+-   **NEVER** implement logic in ports, only contracts
+-   **ALWAYS** use ports as types in usecases
+
+### 5. Infrastructure Layer (infrastructure/) - CONCRETE IMPLEMENTATIONS
+
+-   **ALWAYS** implement ports in `infrastructure/supabase/`
+-   **ALWAYS** name implementations with the "Supabase" suffix (e.g., `productRepositorySupabase`)
+-   **ALWAYS** implement interfaces defined in `core/ports/`
+-   **NEVER** import UI or Zustand in infrastructure
+-   **ALWAYS** use Supabase, Fetch, or other external libs only in infrastructure
+
+**Mandatory structure example:**
+
+```typescript
+export const productRepositorySupabase: ProductRepository = {
+    list: async () => {
+        // ...supabase.from("products")...
+    },
+};
+```
+
+### 6. Presentation Layer - UI ONLY, NO BUSINESS LOGIC
+
+#### 6.1. Components (presentation/components)
+
+-   **ALWAYS** create pure UI components without business logic
+-   **NEVER** call Supabase directly from a component
+-   **NEVER** put business logic in components
+-   **ALWAYS** receive ready data via props
+-   **ALWAYS** use React Query hooks to fetch data
+-   **ALWAYS** place reusable components (Button, Input, Card, etc.) in `presentation/components/ui/`
+-   **NEVER** create reusable components elsewhere than in `presentation/components/ui/`
+-   **ALWAYS** organize page-specific components in their own folders: `presentation/components/{componentName}/`
+-   **ALWAYS** place component files (`.tsx`, `.module.scss`, etc.) in the component folder
+-   **NEVER** place component files directly in `presentation/components/` root
+
+#### 6.2. Hooks (presentation/hooks)
+
+-   **ALWAYS** create React Query hooks in `presentation/hooks/`
+-   **ALWAYS** call usecases from hooks, not directly from infrastructure
+-   **ALWAYS** provide `data`, `isLoading`, `error` from hooks
+-   **NEVER** put business logic in hooks, only orchestration
+-   **ALWAYS** use the following structure:
+
+```typescript
+export function useProducts() {
+    return useQuery({
+        queryKey: ["products"],
+        queryFn: () => listProducts(productRepositorySupabase),
+    });
+}
+```
+
+#### 6.3. Stores Zustand (presentation/stores)
+
+-   **ALWAYS** store only UI state (filters, modals, categories, drawer)
+-   **NEVER** put business logic in Zustand stores
+-   **NEVER** call Supabase or usecases from stores
+-   **ALWAYS** keep stores for UI state only
+
+#### 6.4. Providers (presentation/providers)
+
+-   **ALWAYS** create global providers in `presentation/providers/`
+-   **ALWAYS** include ReactQueryProvider for React Query
+-   **NEVER** put business logic in providers
+
+### 7. Shared Layer (shared/) - SHARED CODE
+
+-   **ALWAYS** place shared code between layers in `shared/`
+-   **ALWAYS** place accessibility utilities in `shared/a11y/`
+-   **ALWAYS** place accessibility constants in `shared/a11y/`
+-   **NEVER** put business logic in shared
+-   **ALWAYS** keep shared for cross-cutting utilities and constants
+-   **ALWAYS** allow importing shared from all layers (domain, usecases, infrastructure, presentation)
+
+### 8. File Organization - MANDATORY STRUCTURE
+
+-   **ALWAYS** create files in the correct directories according to their role:
+    -   Business types → `core/domain/`
+    -   Usecases → `core/usecases/`
+    -   Repository interfaces → `core/ports/`
+    -   Supabase implementations → `infrastructure/supabase/`
+    -   Page-specific UI components → `presentation/components/{componentName}/` (each component in its own folder)
+    -   **Reusable components** (Button, Input, Card, etc.) → `presentation/components/ui/`
+    -   React Query hooks → `presentation/hooks/`
+    -   Zustand stores → `presentation/stores/`
+    -   Providers → `presentation/providers/`
+    -   **Accessibility** (utilities, constants) → `shared/a11y/`
+
+### 9. Import Rules - STRICT DEPENDENCY DIRECTION
+
+-   **ALWAYS** respect import direction:
+    -   Domain: no external imports (except `shared/` if needed)
+    -   Usecases: import Domain and Ports only (except `shared/` if needed)
+    -   Infrastructure: import Domain and Ports only (except `shared/` if needed)
+    -   Presentation: import Domain, Usecases, and Infrastructure only (except `shared/` if needed)
+    -   Shared: can be imported by all layers
+-   **NEVER** make forbidden cross-layer imports (e.g., infrastructure → presentation)
+-   **NEVER** import Supabase in `/core/`
+-   **NEVER** import React/Next.js in `/core/`
+-   **ALWAYS** use `shared/a11y/` for all accessibility utilities and constants
+
+## ARCHITECTURE VIOLATIONS - AUTO-STOP CONDITIONS
+
+### 10. Critical Violations - ALWAYS STOP
+
+1. **Import Supabase in core/** → STOP and use a port instead
+2. **Business logic in a component** → STOP and move to a usecase
+3. **Supabase call from UI** → STOP and use a React Query hook
+4. **Business logic in Zustand** → STOP and move to a usecase
+5. **Hook calling infrastructure directly** → STOP and go through a usecase
+6. **Import React/Next.js in core/** → STOP and keep core pure TypeScript
+7. **Import UI in infrastructure** → STOP and respect separation
+8. **Reusable component outside `presentation/components/ui/`** → STOP and move to `presentation/components/ui/`
+9. **Page-specific component files in root `presentation/components/`** → STOP and move to `presentation/components/{componentName}/` folder
+
+## ARCHITECTURE COMPLIANCE - MANDATORY VERIFICATION
+
+### 11. Code Generation Checklist
+
+Before EVERY code generation:
+
+✅ **Layer Separation**
+
+-   File created in the correct directory according to its role?
+-   No forbidden cross-layer imports?
+-   Flow respected (UI → Hook → Usecase → Repository)?
+
+✅ **Domain Layer**
+
+-   Business types in core/domain?
+-   No external imports in domain?
+-   Pure business rules without dependencies?
+
+✅ **Usecases Layer**
+
+-   Usecase takes a repository as parameter?
+-   No Supabase/React imports in usecase?
+-   Returns domain data?
+
+✅ **Infrastructure Layer**
+
+-   Implements a port defined in core/ports?
+-   No UI/Zustand imports?
+-   Uses Supabase only here?
+
+✅ **Presentation Layer**
+
+-   Component without business logic?
+-   Reusable components in `presentation/components/ui/`?
+-   Page-specific components in their own folders `presentation/components/{componentName}/`?
+-   Hook calls a usecase, not directly infrastructure?
+-   Zustand store for UI state only?
+
+## DATA FLOW REFERENCE - ALWAYS FOLLOW
+
+```
+UI (Next Page)
+    ↓ calls
+React Query Hook (useProducts)
+    ↓ calls
+Usecase (listProducts)
+    ↓ calls
+Repository (productRepositorySupabase)
+    ↓ calls
+Supabase (infrastructure)
+```
+
+**Always in this direction. Never reversed.**
+
+This ensures strict Clean Architecture compliance and maintainable, testable code with clear separation of concerns.

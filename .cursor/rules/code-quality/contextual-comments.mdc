@@ -1,0 +1,113 @@
+---
+alwaysApply: true
+name: "Lean Documentation & Contextual Comments"
+description: "Keep documentation meaningful and minimal. Document where it adds business value, following Clean Architecture layers."
+globs: ["src/**/*.{ts,tsx}"]
+priority: medium
+---
+
+# Intent
+
+Less is more. Documentation should clarify business meaning and non-obvious behavior without creating noise. Apply documentation selectively per layer to maximize signal.
+
+## Where Documentation is Required
+
+### 2. Domain Layer (`core/domain/*`) — MANDATORY
+
+-   Document types, entities, value objects, and enums.
+-   Explain domain meaning and rules.
+-   Keep it short but meaningful.
+
+### 3. Ports (`core/ports/*`) — MANDATORY
+
+-   Document behavior contracts: what implementations MUST guarantee.
+-   Document expected errors, side-effects, and invariants.
+-   Note input/output constraints and any ordering requirements.
+
+### 4. Usecases (`core/usecases/*`) — RECOMMENDED
+
+-   Briefly explain the business flow.
+-   Document validation rules and orchestration decisions (e.g., “store checked before calling repo”).
+-   Do not document trivial code.
+
+### 5. Infrastructure (`infrastructure/*`) — OPTIONAL (only if non-obvious)
+
+Document only when:
+
+-   Mapping is tricky
+-   External API behavior is unclear
+-   Error handling or retries require justification
+-   Config has a strong reason (e.g., `detectSessionInUrl: false`)
+
+### 6. Presentation (`presentation/*`) — MINIMAL
+
+-   Only document hooks or components with real business behavior.
+-   No need to document simple UI components unless complex.
+
+## Inline Comments
+
+### 7. When Inline Comments Should Be Added
+
+Use inline comments only for:
+
+-   Complex mappings
+-   Non-obvious validation
+-   Domain rules that must not be broken
+-   Architectural constraints
+-   Workarounds for third-party limitations
+
+Avoid inline comments for:
+
+-   Simple conditionals
+-   Simple UI code
+-   Trivial operations
+
+## Error Handling
+
+### 8. Error Strategy Documentation
+
+Document error strategy only where meaningful:
+
+-   Local validation? → no doc needed.
+-   Mapping Supabase/external errors? → yes, add a brief note.
+-   Retrying logic? → yes.
+-   Swallowing event errors? → yes (and why).
+
+## Clean Architecture Compliance
+
+### 9. Architecture Clarity
+
+For public APIs, repositories, and usecases:
+
+-   Indicate the layer (Domain / Usecase / Infrastructure / Presentation) when not obvious.
+-   Explain dependencies only when not obvious.
+-   Don’t repeat architecture everywhere; only where it matters.
+
+## AI Assistance
+
+### 10. Help the AI When Needed
+
+Add documentation when:
+
+-   A function expresses business meaning
+-   A domain rule is subtle
+-   A mapping involves implicit constraints
+-   A usecase orchestrates multiple steps
+
+Otherwise, keep it light.
+
+## Checklist for Cursor
+
+-   Public function undocumented but meaningful? → Add short JSDoc.
+-   Domain type undocumented? → Add brief meaning and constraints.
+-   Repository contract unclear? → Document expectations and invariants.
+-   Error mapping unclear? → Add a small note.
+-   Everything else? → Skip the documentation.
+
+# Auto-suggestions
+
+-   If a domain type/enum lacks meaning: **Add a one-liner describing business intent**.
+-   If a port’s guarantees are unclear: **Add contract, invariants, and expected errors**.
+-   If a usecase’s orchestration is non-trivial: **Add a short JSDoc of the flow**.
+-   If infrastructure mapping is tricky: **Add a short comment on mapping/assumptions**.
+-   If a hook has business behavior: **Document the behavior and assumptions**.
