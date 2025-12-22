@@ -22,18 +22,18 @@ Define and validate a concise buyer-centric homepage value proposition and 2–3
 ### 1.1 - Clarify buyer personas, problems, and desired outcomes
 
 -   AC: [x] Primary buyer persona(s) documented with key pains and goals [x] Top 2–3 problems Krafto solves for buyers are clearly listed [x] Desired high-level outcomes (what success looks like for buyers) are captured
--   DoD: [x] Findings documented in `docs/buyer-personas-homepage.md` (or existing planning doc) [x] Aligned with current product vision/roadmap (assumptions noted in doc) [x] Reviewed with at least one product stakeholder (to be validated and updated if feedback differs)
+-   DoD: [x] Findings documented in `docs/homepage/buyer-personas.md` (or existing planning doc) [x] Aligned with current product vision/roadmap (assumptions noted in doc) [x] Reviewed with at least one product stakeholder (to be validated and updated if feedback differs)
 -   Effort: 2h | Deps: [none]
 
 ### 1.2 - Draft value proposition and core promises for homepage
 
 -   AC: [x] One concise value proposition sentence written in buyer-centric language [x] 2–3 short, scannable promises describing concrete benefits or guarantees [x] Copy variants (if any) noted with clear pros/cons
--   DoD: [x] Drafts documented with clear structure (hero title, subtitle, bullets) in `docs/homepage-value-proposition.md` [x] Wording consistent with domain concepts and naming from `docs/buyer-personas-homepage.md` [x] Ready for internal review with product stakeholder (comments to be added after feedback)
+-   DoD: [x] Drafts documented with clear structure (hero title, subtitle, bullets) in `docs/homepage/value-proposition.md` [x] Wording consistent with domain concepts and naming from `docs/homepage/buyer-personas.md` [x] Ready for internal review with product stakeholder (comments to be added after feedback)
 -   Effort: 3h | Deps: [1.1]
 
 ### 1.3 - Finalize copy and prepare implementation handoff
 
--   AC: [x] Final version of value proposition and promises selected and documented in `docs/homepage-value-proposition.md` [x] Mapping to homepage UI defined (hero + promises) in the same doc [x] Potential variants and notes available for future experiments
+-   AC: [x] Final version of value proposition and promises selected and documented in `docs/homepage/value-proposition.md` [x] Mapping to homepage UI defined (hero + promises) in the same doc [x] Potential variants and notes available for future experiments
 -   DoD: [x] Final copy stored in repo under `docs/` with clear sections [x] Ticket links added between this planning ticket and future implementation ticket (`jira/2.md`, krafto-2) [x] Status: messaging work ready for implementation
 -   Effort: 2h | Deps: [1.2]
 ```

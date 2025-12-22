@@ -8,6 +8,7 @@
     ".cursor/rules/code-quality/testing-patterns.mdc",
     ".cursor/rules/ui/accessibility.mdc",
     ".cursor/rules/ui/component-structure.mdc",
-    ".cursor/rules/workflow/generated-files.mdc"
+    ".cursor/rules/workflow/generated-files.mdc",
+    ".cursor/rules/workflow/docs-workflow.mdc"
   ]
 }

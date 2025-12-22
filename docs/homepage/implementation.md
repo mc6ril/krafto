@@ -1,7 +1,7 @@
 ---
 Title: Buyer Homepage Implementation Specification
 Source Tickets: krafto-1 (B-HOME-01), krafto-2 (B-HOME-02)
-Related Docs: docs/buyer-personas-homepage.md
+Related Docs: docs/homepage/buyer-personas.md
 Status: Ready for implementation
 ---
 
@@ -96,7 +96,7 @@ Give Buyers a fast way to browse by high-level needs (product type, usage, theme
 ### Category Selection Rules
 
 -   MVP: 6–10 top-level categories surfaced on homepage, derived from taxonomy defined in B-CAT-01.
--   Categories should cover main use cases/persona needs from `docs/buyer-personas-homepage.md`.
+-   Categories should cover main use cases/persona needs from `docs/homepage/buyer-personas.md`.
 -   Avoid overlapping meanings; each category must be clearly distinct.
 
 ### Navigation
@@ -256,7 +256,8 @@ Provide clear, concise evidence that using Krafto is safe and professional-grade
 
 ## Related Documentation
 
--   `docs/buyer-personas-homepage.md` – Buyer personas and needs
+-   `docs/homepage/buyer-personas.md` – Buyer personas and needs
+-   `docs/homepage/value-proposition.md` – Buyer homepage value proposition and promises
 -   `jira/1.md` – B-HOME-01 ticket (value proposition definition)
 -   `jira/2.md` – B-HOME-02 ticket (homepage sections definition)
 -   `report/planning/plan-krafto-2-b-home-02.md` – Detailed planning with sub-ticket specs
