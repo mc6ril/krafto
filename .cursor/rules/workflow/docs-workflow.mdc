@@ -1,0 +1,59 @@
+# Intent
+
+Enforce a **documentation-first workflow**: the assistant must systematically read project docs before proposing or writing code, so implementations stay aligned with existing decisions (product, UX, architecture, domain).
+
+## Mandatory Flow – Reading Order
+
+For any non-trivial change (feature, refactor, bugfix touching behavior or UX), the assistant must follow this flow:
+
+1. **Read `.cursor/` context**
+    - Project rules: architecture, code conventions, testing, UI, workflow.
+    - Any relevant workflow rules under `.cursor/rules/**`.
+2. **Read high-level project docs**
+    - `docs/plan.md` for global roadmap and ticket matrix.
+    - `.cursor/docs/project-overview.md` (if present) for overall architecture and domains.
+3. **Read feature/domain-specific docs**
+    - Search under `docs/` for the relevant area (e.g., `docs/homepage/` for Buyer homepage, `docs/{domain}/` for other areas).
+    - Read the primary spec(s) for the feature before touching code.
+4. **Only then** design and propose **code changes**, keeping a clear link back to the docs.
+
+This flow should be followed at the start of a new ticket/conversation, and again whenever scope changes significantly.
+
+## Docs Discovery – Where to Look
+
+-   **Global**
+    -   `docs/plan.md` – master table of tickets and status.
+    -   `report/planning/` – detailed planning per ticket.
+    -   `jira/*.md` – ticket sources and ACs.
+-   **Feature/domain level**
+    -   Prefer structured subfolders under `docs/` (e.g., `docs/homepage/`, `docs/{domain}/`).
+    -   When adding new feature docs, place them under an appropriate subfolder and reference them from `docs/plan.md` or existing specs.
+
+### Example – Buyer homepage
+
+For any work on the Buyer homepage, the assistant must **always** check, in this order:
+
+-   `docs/homepage/buyer-personas.md` – personas, pains, outcomes.
+-   `docs/homepage/value-proposition.md` – messaging and promises.
+-   `docs/homepage/implementation.md` – sections, IA, navigation.
+-   `docs/homepage/featured-editorial-rules.md` – featured content rules.
+-   `docs/homepage/cta-strategy.md` – CTA hierarchy and entrypoints.
+
+## When Adding or Updating Docs
+
+-   **ALWAYS**:
+    -   Put new docs under `docs/{area}/` rather than at `docs/` root when they are feature/domain-specific.
+    -   Add or update cross-references (e.g., from `docs/plan.md`, relevant specs, or planning reports).
+    -   Keep paths stable (`docs/homepage/...`) and update any code or planning docs that reference old paths.
+-   **NEVER**:
+    -   Create parallel, divergent specs for the same feature in different locations.
+    -   Ignore existing docs when implementing a ticket; if the docs are wrong or outdated, update them instead of bypassing them.
+
+## Checklist Before Coding
+
+Before writing or changing code, the assistant must be able to answer “yes” to:
+
+-   [ ] Have I read the relevant `.cursor/rules/**` for this repo?
+-   [ ] Have I checked `docs/plan.md` (and, if present, `.cursor/docs/project-overview.md`) for overall context?
+-   [ ] Have I located and read the feature/domain docs under `docs/` (e.g., `docs/homepage/` for homepage work)?
+-   [ ] Am I explicitly aligning my changes with what these docs say (or updating docs if they are wrong/outdated)?

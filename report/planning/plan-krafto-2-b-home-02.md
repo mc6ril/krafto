@@ -77,9 +77,9 @@ Key constraints: respect Clean Architecture (no business logic in UI, no Supabas
 
 -   **Core content (desktop and mobile)**:
 
-    -   **Hero title (H1)**: reuse the finalized hero title from `docs/homepage-value-proposition.md` (krafto-1): “Make supplier catalogs clear, centralized, and easy to act on.”
-    -   **Hero subtitle**: reuse the finalized subtitle from the same doc, placed directly under the H1.
-    -   **Supporting promises**: visually connect (via layout) to the three core promises defined in `docs/homepage-value-proposition.md`, either as a nearby bullet list or as a short “key benefits” strip adjacent to the hero.
+-   **Hero title (H1)**: reuse the finalized hero title from `docs/homepage/value-proposition.md` (krafto-1): “Make supplier catalogs clear, centralized, and easy to act on.”
+-   **Hero subtitle**: reuse the finalized subtitle from the same doc (`docs/homepage/value-proposition.md`), placed directly under the H1.
+-   **Supporting promises**: visually connect (via layout) to the three core promises defined in `docs/homepage/value-proposition.md`, either as a nearby bullet list or as a short “key benefits” strip adjacent to the hero.
 
 -   **Primary and secondary CTAs**:
 
@@ -139,7 +139,7 @@ Key constraints: respect Clean Architecture (no business logic in UI, no Supabas
         -   Optional description to clarify that more categories exist beyond those listed (e.g., link to “See all categories” or “Browse all”).
     -   **Category selection rules (content, not data model)**:
         -   MVP: 6–10 top-level categories surfaced on the homepage, derived from the taxonomy defined in B-CAT-01.
-        -   Categories chosen should cover the main use cases/persona needs identified in `docs/buyer-personas-homepage.md`.
+        -   Categories chosen should cover the main use cases/persona needs identified in `docs/homepage/buyer-personas.md`.
         -   Avoid overlapping meanings; each category should be clearly distinct from the others.
 
 -   **Relationship and navigation between the two sections**:

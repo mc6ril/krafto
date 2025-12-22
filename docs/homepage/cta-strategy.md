@@ -8,7 +8,7 @@ Status: In progress
 
 ### 1.1 List of homepage-relevant CTAs
 
-Based on the current Buyer homepage implementation spec (`docs/homepage-implementation.md`) and future plans, the main CTAs that can appear on or be triggered from the Buyer homepage are:
+Based on the current Buyer homepage implementation spec (`docs/homepage/implementation.md`) and future plans, the main CTAs that can appear on or be triggered from the Buyer homepage are:
 
 -   **Buyer-focused (buy-side) CTAs**
     -   **Explore catalogs** (primary)
@@ -62,7 +62,7 @@ Primary CTAs should be visually dominant; secondary CTAs should be clearly visib
 
 ### 1.4 Mapping CTAs to homepage sections
 
-Using the sections defined in `docs/homepage-implementation.md`, the baseline mapping is:
+Using the sections defined in `docs/homepage/implementation.md`, the baseline mapping is:
 
 -   **Hero section**
     -   Primary CTA: **Explore catalogs**.
@@ -119,7 +119,6 @@ This mapping ensures that the **hero** remains the main decision point for Buyer
 -   **Trust signals section**
     -   Can be followed by a repeated **Explore catalogs** CTA or a combined CTA block (e.g., \"Explore catalogs\" + \"Talk to us\") where the primary action remains exploration.
 
-
 ## 3. Seller onboarding entry points and constraints (B-HOME-04.3)
 
 ### 3.1 Possible Seller CTAs and locations
@@ -155,8 +154,6 @@ Possible locations:
 -   Do not place a strong Seller CTA in the hero on the Buyer homepage.
 -   Avoid grouping Seller and Buyer primary CTAs in the same visual container; if both must appear together (e.g., in header), Buyer CTAs should remain visually dominant.
 -   Ensure Seller CTAs use copy that clearly indicates they are for suppliers (e.g., "Sell on Krafto"), reducing ambiguity for Buyers.
-
-
 
 ## 4. Conflict/dilution safeguards and experimentation rules (B-HOME-04.4)
 
@@ -197,16 +194,14 @@ Any A/B tests involving CTAs on the Buyer homepage must:
     -   The homepage section structure from B-HOME-02.
     -   The editorial rules for featured content from B-HOME-03.
 
-
-
 ## 5. Cross-references and follow-up tickets (B-HOME-04.5)
 
 ### 5.1 Documentation updates needed
 
--   `docs/homepage-implementation.md`
+-   `docs/homepage/implementation.md`
     -   Add a short subsection summarizing the CTA hierarchy (primary: Explore catalogs; secondary: See how Krafto works; tertiary: Talk to us / Book a demo) and pointing to `docs/homepage-cta-strategy.md` as the detailed source of truth.
     -   Ensure hero CTAs in the implementation spec explicitly match the strategy (labels and target flows).
--   `docs/homepage-featured-editorial-rules.md`
+-   `docs/homepage/featured-editorial-rules.md`
     -   Cross-reference how primary CTAs interact with featured sections (e.g., Explore catalogs leading into featured artisans/categories/collections).
 -   `docs/plan.md`
     -   Optionally link this CTA strategy as part of the Buyer homepage planning stack (B-HOME-01 → 04).
@@ -225,4 +220,3 @@ Any A/B tests involving CTAs on the Buyer homepage must:
 
 -   CTA placements that lead into discovery (e.g., Explore catalogs) should land users in sections that respect featured editorial rules (eligibility, diversity, rotation).
 -   Any experiments involving CTAs that drive traffic to featured content must also comply with the fairness and rotation rules defined in `docs/homepage-featured-editorial-rules.md`.
-

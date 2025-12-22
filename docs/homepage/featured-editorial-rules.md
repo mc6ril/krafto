@@ -16,10 +16,10 @@ Status: In progress
 
 ### 1.2 List of \"featured\" surfaces on the Buyer homepage
 
-Based on the current Buyer homepage implementation spec (`docs/homepage-implementation.md`), the following surfaces are considered \"featured\":
+Based on the current Buyer homepage implementation spec (`docs/homepage/implementation.md`), the following surfaces are considered \"featured\":
 
 1. **Featured artisans section**
-    - Location: Dedicated section titled as a curated selection of artisans (see section \"Featured Artisans Section\" in `docs/homepage-implementation.md`).
+    - Location: Dedicated section titled as a curated selection of artisans (see section \"Featured Artisans Section\" in `docs/homepage/implementation.md`).
     - Content type: **Shops / artisans** only.
     - Role: Showcase a small set of artisans that represent marketplace breadth and quality.
 2. **Collections / thematic highlights section**

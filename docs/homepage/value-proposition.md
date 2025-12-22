@@ -1,11 +1,11 @@
 ---
 Title: Homepage value proposition and promises for buyers
 Source Ticket: krafto-1 (B-HOME-01)
-Related Doc: docs/buyer-personas-homepage.md
+Related Doc: docs/homepage/buyer-personas.md
 Status: Migrated to docs/homepage-implementation.md
 ---
 
-> **Note**: This document has been consolidated into `docs/homepage-implementation.md`, which includes the value proposition plus all homepage section specifications. Please refer to `docs/homepage-implementation.md` for the complete implementation specification.
+> **Note**: This document has been consolidated into `docs/homepage/implementation.md`, which includes the value proposition plus all homepage section specifications. Please refer to `docs/homepage/implementation.md` for the complete implementation specification.
 
 ## Proposed value proposition (hero title + subtitle)
 
