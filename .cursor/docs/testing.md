@@ -4,10 +4,10 @@ This document provides detailed examples and patterns for writing unit tests in 
 
 ## Overview
 
--   **Framework**: Jest
--   **Test Location**: `__tests__/` directory at project root
--   **Mock Location**: `__mocks__/` directory at project root
--   **Language**: TypeScript only (`.test.ts` or `.test.tsx`)
+- **Framework**: Jest
+- **Test Location**: `__tests__/` directory at project root
+- **Mock Location**: `__mocks__/` directory at project root
+- **Language**: TypeScript only (`.test.ts` or `.test.tsx`)
 
 ## Test Types
 
@@ -42,16 +42,16 @@ import type { Product } from "@/core/domain/product";
  * Provides controllable mock methods that can be configured in tests.
  */
 export const mockProductRepository: ProductRepository = {
-    list: jest.fn<Promise<Product[]>, []>(),
-    findById: jest.fn<Promise<Product | null>, [string]>(),
-    create: jest.fn<Promise<Product>, [Omit<Product, "id">]>(),
-    update: jest.fn<Promise<Product>, [string, Partial<Product>]>(),
-    delete: jest.fn<Promise<void>, [string]>(),
+  list: jest.fn<Promise<Product[]>, []>(),
+  findById: jest.fn<Promise<Product | null>, [string]>(),
+  create: jest.fn<Promise<Product>, [Omit<Product, "id">]>(),
+  update: jest.fn<Promise<Product>, [string, Partial<Product>]>(),
+  delete: jest.fn<Promise<void>, [string]>(),
 };
 
 // Helper function to reset all mocks
 export const resetMockProductRepository = (): void => {
-    jest.clearAllMocks();
+  jest.clearAllMocks();
 };
 ```
 
@@ -67,22 +67,37 @@ import type { Product } from "@/core/domain/product";
  * Provides default values that can be overridden in tests.
  */
 export const createMockProduct = (overrides?: Partial<Product>): Product => ({
-    id: "product-1",
-    name: "Sac banane L'Assumée",
-    type: "SAC_BANANE",
-    unitCost: 10.5,
-    salePrice: 19.99,
-    stock: 10,
-    ...overrides,
+  id: "product-1",
+  name: "Sac banane L'Assumée",
+  type: "SAC_BANANE",
+  unitCost: 10.5,
+  salePrice: 19.99,
+  stock: 10,
+  ...overrides,
 });
 
 /**
  * Pre-configured mock products for common test scenarios.
  */
 export const mockProducts: Product[] = [
-    createMockProduct({ id: "product-1", name: "Sac banane L'Assumée", type: "SAC_BANANE", stock: 10 }),
-    createMockProduct({ id: "product-2", name: "Pochette ordinateur L'Espiegle", type: "POCHETTE_ORDINATEUR", stock: 5 }),
-    createMockProduct({ id: "product-3", name: "Trousse de toilette carrée", type: "TROUSSE_TOILETTE", stock: 0 }),
+  createMockProduct({
+    id: "product-1",
+    name: "Sac banane L'Assumée",
+    type: "SAC_BANANE",
+    stock: 10,
+  }),
+  createMockProduct({
+    id: "product-2",
+    name: "Pochette ordinateur L'Espiegle",
+    type: "POCHETTE_ORDINATEUR",
+    stock: 5,
+  }),
+  createMockProduct({
+    id: "product-3",
+    name: "Trousse de toilette carrée",
+    type: "TROUSSE_TOILETTE",
+    stock: 0,
+  }),
 ];
 ```
 
@@ -96,21 +111,21 @@ export const mockProducts: Product[] = [
  * Simulates Supabase API without real database connections.
  */
 export const mockSupabaseClient = {
-    from: jest.fn(() => ({
-        select: jest.fn().mockReturnThis(),
-        insert: jest.fn().mockReturnThis(),
-        update: jest.fn().mockReturnThis(),
-        delete: jest.fn().mockReturnThis(),
-        eq: jest.fn().mockReturnThis(),
-        single: jest.fn(),
-        then: jest.fn((onResolve) => {
-            onResolve({ data: null, error: null });
-        }),
-    })),
+  from: jest.fn(() => ({
+    select: jest.fn().mockReturnThis(),
+    insert: jest.fn().mockReturnThis(),
+    update: jest.fn().mockReturnThis(),
+    delete: jest.fn().mockReturnThis(),
+    eq: jest.fn().mockReturnThis(),
+    single: jest.fn(),
+    then: jest.fn((onResolve) => {
+      onResolve({ data: null, error: null });
+    }),
+  })),
 };
 
 jest.mock("@/infrastructure/supabase/client", () => ({
-    supabaseClient: mockSupabaseClient,
+  supabaseClient: mockSupabaseClient,
 }));
 ```
 
@@ -128,88 +143,102 @@ import { isLowStock, calculateTotalValue } from "@/core/domain/product";
 import type { Product } from "@/core/domain/product";
 
 describe("Product Domain Functions", () => {
-    describe("isLowStock", () => {
-        it("should return true when stock is below threshold", () => {
-            // Arrange
-            const product: Product = {
-                id: "1",
-                name: "Sac banane L'Assumée",
-                type: "SAC_BANANE",
-                unitCost: 10.5,
-                salePrice: 19.99,
-                stock: 5,
-            };
+  describe("isLowStock", () => {
+    it("should return true when stock is below threshold", () => {
+      // Arrange
+      const product: Product = {
+        id: "1",
+        name: "Sac banane L'Assumée",
+        type: "SAC_BANANE",
+        unitCost: 10.5,
+        salePrice: 19.99,
+        stock: 5,
+      };
 
-            // Act
-            const result = isLowStock(product, 10);
+      // Act
+      const result = isLowStock(product, 10);
 
-            // Assert
-            expect(result).toBe(true);
-        });
-
-        it("should return false when stock is above threshold", () => {
-            // Arrange
-            const product: Product = {
-                id: "1",
-                name: "Pochette ordinateur L'Espiegle",
-                type: "POCHETTE_ORDINATEUR",
-                unitCost: 12.0,
-                salePrice: 24.99,
-                stock: 15,
-            };
-
-            // Act
-            const result = isLowStock(product, 10);
-
-            // Assert
-            expect(result).toBe(false);
-        });
-
-        it("should return true when stock is exactly at threshold", () => {
-            // Arrange
-            const product: Product = {
-                id: "1",
-                name: "Trousse de toilette carrée",
-                type: "TROUSSE_TOILETTE",
-                unitCost: 8.5,
-                salePrice: 16.99,
-                stock: 10,
-            };
-
-            // Act
-            const result = isLowStock(product, 10);
-
-            // Assert
-            expect(result).toBe(true);
-        });
+      // Assert
+      expect(result).toBe(true);
     });
 
-    describe("calculateTotalValue", () => {
-        it("should calculate total value correctly", () => {
-            // Arrange
-            const products: Product[] = [
-                { id: "1", name: "Sac banane L'Assumée", type: "SAC_BANANE", unitCost: 10.5, salePrice: 19.99, stock: 5 },
-                { id: "2", name: "Pochette ordinateur L'Espiegle", type: "POCHETTE_ORDINATEUR", unitCost: 12.0, salePrice: 24.99, stock: 3 },
-            ];
+    it("should return false when stock is above threshold", () => {
+      // Arrange
+      const product: Product = {
+        id: "1",
+        name: "Pochette ordinateur L'Espiegle",
+        type: "POCHETTE_ORDINATEUR",
+        unitCost: 12.0,
+        salePrice: 24.99,
+        stock: 15,
+      };
 
-            // Act
-            const total = calculateTotalValue(products);
+      // Act
+      const result = isLowStock(product, 10);
 
-            // Assert
-            expect(total).toBe(110); // (5 * 10) + (3 * 20)
-        });
-
-        it("should return 0 for empty array", () => {
-            // Arrange
-            const products: Product[] = [];
-
-            // Act
-            const total = calculateTotalValue(products);
-
-            // Assert
-            expect(total).toBe(0);
-        });
+      // Assert
+      expect(result).toBe(false);
     });
+
+    it("should return true when stock is exactly at threshold", () => {
+      // Arrange
+      const product: Product = {
+        id: "1",
+        name: "Trousse de toilette carrée",
+        type: "TROUSSE_TOILETTE",
+        unitCost: 8.5,
+        salePrice: 16.99,
+        stock: 10,
+      };
+
+      // Act
+      const result = isLowStock(product, 10);
+
+      // Assert
+      expect(result).toBe(true);
+    });
+  });
+
+  describe("calculateTotalValue", () => {
+    it("should calculate total value correctly", () => {
+      // Arrange
+      const products: Product[] = [
+        {
+          id: "1",
+          name: "Sac banane L'Assumée",
+          type: "SAC_BANANE",
+          unitCost: 10.5,
+          salePrice: 19.99,
+          stock: 5,
+        },
+        {
+          id: "2",
+          name: "Pochette ordinateur L'Espiegle",
+          type: "POCHETTE_ORDINATEUR",
+          unitCost: 12.0,
+          salePrice: 24.99,
+          stock: 3,
+        },
+      ];
+
+      // Act
+      const total = calculateTotalValue(products);
+
+      // Assert
+      expect(total).toBe(110); // (5 * 10) + (3 * 20)
+    });
+
+    it("should return 0 for empty array", () => {
+      // Arrange
+      const products: Product[] = [];
+
+      // Act
+      const total = calculateTotalValue(products);
+
+      // Assert
+      expect(total).toBe(0);
+    });
+  });
 });
 ```
 
@@ -220,68 +249,71 @@ describe("Product Domain Functions", () => {
 
 ```typescript
 import { listProducts, createProduct } from "@/core/usecases/product";
-import { mockProductRepository, resetMockProductRepository } from "__mocks__/core/ports/productRepository";
+import {
+  mockProductRepository,
+  resetMockProductRepository,
+} from "__mocks__/core/ports/productRepository";
 import { mockProducts, createMockProduct } from "__mocks__/core/domain/product";
 
 // Mock the repository
 jest.mock("@/infrastructure/supabase/productRepositorySupabase", () => ({
-    productRepositorySupabase: mockProductRepository,
+  productRepositorySupabase: mockProductRepository,
 }));
 
 describe("Product Usecases", () => {
-    beforeEach(() => {
-        resetMockProductRepository();
+  beforeEach(() => {
+    resetMockProductRepository();
+  });
+
+  describe("listProducts", () => {
+    it("should return list of products from repository", async () => {
+      // Arrange
+      mockProductRepository.list.mockResolvedValue(mockProducts);
+
+      // Act
+      const result = await listProducts(mockProductRepository);
+
+      // Assert
+      expect(result).toEqual(mockProducts);
+      expect(mockProductRepository.list).toHaveBeenCalledTimes(1);
+      expect(mockProductRepository.list).toHaveBeenCalledWith();
     });
 
-    describe("listProducts", () => {
-        it("should return list of products from repository", async () => {
-            // Arrange
-            mockProductRepository.list.mockResolvedValue(mockProducts);
+    it("should return empty array when repository returns empty", async () => {
+      // Arrange
+      mockProductRepository.list.mockResolvedValue([]);
 
-            // Act
-            const result = await listProducts(mockProductRepository);
+      // Act
+      const result = await listProducts(mockProductRepository);
 
-            // Assert
-            expect(result).toEqual(mockProducts);
-            expect(mockProductRepository.list).toHaveBeenCalledTimes(1);
-            expect(mockProductRepository.list).toHaveBeenCalledWith();
-        });
-
-        it("should return empty array when repository returns empty", async () => {
-            // Arrange
-            mockProductRepository.list.mockResolvedValue([]);
-
-            // Act
-            const result = await listProducts(mockProductRepository);
-
-            // Assert
-            expect(result).toEqual([]);
-            expect(mockProductRepository.list).toHaveBeenCalledTimes(1);
-        });
+      // Assert
+      expect(result).toEqual([]);
+      expect(mockProductRepository.list).toHaveBeenCalledTimes(1);
     });
+  });
 
-    describe("createProduct", () => {
-        it("should create product via repository", async () => {
-            // Arrange
-            const newProduct = {
-                name: "Pochette à volants",
-                type: "POCHETTE_VOLANTS",
-                unitCost: 9.5,
-                salePrice: 18.99,
-                stock: 10,
-            };
-            const createdProduct = createMockProduct({ ...newProduct, id: "new-id" });
-            mockProductRepository.create.mockResolvedValue(createdProduct);
+  describe("createProduct", () => {
+    it("should create product via repository", async () => {
+      // Arrange
+      const newProduct = {
+        name: "Pochette à volants",
+        type: "POCHETTE_VOLANTS",
+        unitCost: 9.5,
+        salePrice: 18.99,
+        stock: 10,
+      };
+      const createdProduct = createMockProduct({ ...newProduct, id: "new-id" });
+      mockProductRepository.create.mockResolvedValue(createdProduct);
 
-            // Act
-            const result = await createProduct(mockProductRepository, newProduct);
+      // Act
+      const result = await createProduct(mockProductRepository, newProduct);
 
-            // Assert
-            expect(result).toEqual(createdProduct);
-            expect(mockProductRepository.create).toHaveBeenCalledTimes(1);
-            expect(mockProductRepository.create).toHaveBeenCalledWith(newProduct);
-        });
+      // Assert
+      expect(result).toEqual(createdProduct);
+      expect(mockProductRepository.create).toHaveBeenCalledTimes(1);
+      expect(mockProductRepository.create).toHaveBeenCalledWith(newProduct);
     });
+  });
 });
 ```
 
@@ -350,159 +382,162 @@ describe("Button Component", () => {
 **Test**: `__tests__/core/domain/stockMovement.test.ts`
 
 ```typescript
-import { validateStockMovement, calculateStockAfterMovement } from "@/core/domain/stockMovement";
+import {
+  validateStockMovement,
+  calculateStockAfterMovement,
+} from "@/core/domain/stockMovement";
 import type { StockMovement, MovementType } from "@/core/domain/stockMovement";
 
 describe("StockMovement Domain", () => {
-    describe("validateStockMovement", () => {
-        describe("when movement type is IN", () => {
-            it("should return true for valid positive quantity", () => {
-                // Arrange
-                const movement: StockMovement = {
-                    id: "1",
-                    productId: "product-1",
-                    type: "IN" as MovementType,
-                    quantity: 10,
-                    // ... other fields
-                };
+  describe("validateStockMovement", () => {
+    describe("when movement type is IN", () => {
+      it("should return true for valid positive quantity", () => {
+        // Arrange
+        const movement: StockMovement = {
+          id: "1",
+          productId: "product-1",
+          type: "IN" as MovementType,
+          quantity: 10,
+          // ... other fields
+        };
 
-                // Act
-                const isValid = validateStockMovement(movement);
+        // Act
+        const isValid = validateStockMovement(movement);
 
-                // Assert
-                expect(isValid).toBe(true);
-            });
+        // Assert
+        expect(isValid).toBe(true);
+      });
 
-            it("should return false for negative quantity", () => {
-                // Arrange
-                const movement: StockMovement = {
-                    id: "1",
-                    productId: "product-1",
-                    type: "IN" as MovementType,
-                    quantity: -5,
-                    // ... other fields
-                };
+      it("should return false for negative quantity", () => {
+        // Arrange
+        const movement: StockMovement = {
+          id: "1",
+          productId: "product-1",
+          type: "IN" as MovementType,
+          quantity: -5,
+          // ... other fields
+        };
 
-                // Act
-                const isValid = validateStockMovement(movement);
+        // Act
+        const isValid = validateStockMovement(movement);
 
-                // Assert
-                expect(isValid).toBe(false);
-            });
+        // Assert
+        expect(isValid).toBe(false);
+      });
 
-            it("should return false for zero quantity", () => {
-                // Arrange
-                const movement: StockMovement = {
-                    id: "1",
-                    productId: "product-1",
-                    type: "IN" as MovementType,
-                    quantity: 0,
-                    // ... other fields
-                };
+      it("should return false for zero quantity", () => {
+        // Arrange
+        const movement: StockMovement = {
+          id: "1",
+          productId: "product-1",
+          type: "IN" as MovementType,
+          quantity: 0,
+          // ... other fields
+        };
 
-                // Act
-                const isValid = validateStockMovement(movement);
+        // Act
+        const isValid = validateStockMovement(movement);
 
-                // Assert
-                expect(isValid).toBe(false);
-            });
-        });
-
-        describe("when movement type is OUT", () => {
-            it("should return true for valid positive quantity", () => {
-                // Arrange
-                const movement: StockMovement = {
-                    id: "1",
-                    productId: "product-1",
-                    type: "OUT" as MovementType,
-                    quantity: 5,
-                    // ... other fields
-                };
-
-                // Act
-                const isValid = validateStockMovement(movement);
-
-                // Assert
-                expect(isValid).toBe(true);
-            });
-
-            it("should return false for negative quantity", () => {
-                // Arrange
-                const movement: StockMovement = {
-                    id: "1",
-                    productId: "product-1",
-                    type: "OUT" as MovementType,
-                    quantity: -5,
-                    // ... other fields
-                };
-
-                // Act
-                const isValid = validateStockMovement(movement);
-
-                // Assert
-                expect(isValid).toBe(false);
-            });
-        });
+        // Assert
+        expect(isValid).toBe(false);
+      });
     });
 
-    describe("calculateStockAfterMovement", () => {
-        describe("when current stock is sufficient", () => {
-            it("should decrease stock for OUT movement", () => {
-                // Arrange
-                const currentStock = 20;
-                const movement: StockMovement = {
-                    id: "1",
-                    productId: "product-1",
-                    type: "OUT" as MovementType,
-                    quantity: 5,
-                    // ... other fields
-                };
+    describe("when movement type is OUT", () => {
+      it("should return true for valid positive quantity", () => {
+        // Arrange
+        const movement: StockMovement = {
+          id: "1",
+          productId: "product-1",
+          type: "OUT" as MovementType,
+          quantity: 5,
+          // ... other fields
+        };
 
-                // Act
-                const newStock = calculateStockAfterMovement(currentStock, movement);
+        // Act
+        const isValid = validateStockMovement(movement);
 
-                // Assert
-                expect(newStock).toBe(15);
-            });
+        // Assert
+        expect(isValid).toBe(true);
+      });
 
-            it("should increase stock for IN movement", () => {
-                // Arrange
-                const currentStock = 20;
-                const movement: StockMovement = {
-                    id: "1",
-                    productId: "product-1",
-                    type: "IN" as MovementType,
-                    quantity: 10,
-                    // ... other fields
-                };
+      it("should return false for negative quantity", () => {
+        // Arrange
+        const movement: StockMovement = {
+          id: "1",
+          productId: "product-1",
+          type: "OUT" as MovementType,
+          quantity: -5,
+          // ... other fields
+        };
 
-                // Act
-                const newStock = calculateStockAfterMovement(currentStock, movement);
+        // Act
+        const isValid = validateStockMovement(movement);
 
-                // Assert
-                expect(newStock).toBe(30);
-            });
-        });
-
-        describe("when current stock would become negative", () => {
-            it("should throw error for OUT movement exceeding stock", () => {
-                // Arrange
-                const currentStock = 5;
-                const movement: StockMovement = {
-                    id: "1",
-                    productId: "product-1",
-                    type: "OUT" as MovementType,
-                    quantity: 10,
-                    // ... other fields
-                };
-
-                // Act & Assert
-                expect(() => {
-                    calculateStockAfterMovement(currentStock, movement);
-                }).toThrow("Insufficient stock");
-            });
-        });
+        // Assert
+        expect(isValid).toBe(false);
+      });
     });
+  });
+
+  describe("calculateStockAfterMovement", () => {
+    describe("when current stock is sufficient", () => {
+      it("should decrease stock for OUT movement", () => {
+        // Arrange
+        const currentStock = 20;
+        const movement: StockMovement = {
+          id: "1",
+          productId: "product-1",
+          type: "OUT" as MovementType,
+          quantity: 5,
+          // ... other fields
+        };
+
+        // Act
+        const newStock = calculateStockAfterMovement(currentStock, movement);
+
+        // Assert
+        expect(newStock).toBe(15);
+      });
+
+      it("should increase stock for IN movement", () => {
+        // Arrange
+        const currentStock = 20;
+        const movement: StockMovement = {
+          id: "1",
+          productId: "product-1",
+          type: "IN" as MovementType,
+          quantity: 10,
+          // ... other fields
+        };
+
+        // Act
+        const newStock = calculateStockAfterMovement(currentStock, movement);
+
+        // Assert
+        expect(newStock).toBe(30);
+      });
+    });
+
+    describe("when current stock would become negative", () => {
+      it("should throw error for OUT movement exceeding stock", () => {
+        // Arrange
+        const currentStock = 5;
+        const movement: StockMovement = {
+          id: "1",
+          productId: "product-1",
+          type: "OUT" as MovementType,
+          quantity: 10,
+          // ... other fields
+        };
+
+        // Act & Assert
+        expect(() => {
+          calculateStockAfterMovement(currentStock, movement);
+        }).toThrow("Insufficient stock");
+      });
+    });
+  });
 });
 ```
 
@@ -511,128 +546,153 @@ describe("StockMovement Domain", () => {
 **Test**: `__tests__/core/usecases/productManagement.test.ts`
 
 ```typescript
-import { updateProductStock, getLowStockProducts } from "@/core/usecases/productManagement";
-import { mockProductRepository, resetMockProductRepository } from "__mocks__/core/ports/productRepository";
+import {
+  updateProductStock,
+  getLowStockProducts,
+} from "@/core/usecases/productManagement";
+import {
+  mockProductRepository,
+  resetMockProductRepository,
+} from "__mocks__/core/ports/productRepository";
 import { mockProducts, createMockProduct } from "__mocks__/core/domain/product";
 
 jest.mock("@/infrastructure/supabase/productRepositorySupabase", () => ({
-    productRepositorySupabase: mockProductRepository,
+  productRepositorySupabase: mockProductRepository,
 }));
 
 describe("Product Management Usecases", () => {
-    beforeEach(() => {
-        resetMockProductRepository();
+  beforeEach(() => {
+    resetMockProductRepository();
+  });
+
+  describe("updateProductStock", () => {
+    describe("when product exists", () => {
+      it("should update stock and save to repository", async () => {
+        // Arrange
+        const productId = "product-1";
+        const existingProduct = createMockProduct({ id: productId, stock: 10 });
+        const updatedProduct = createMockProduct({ id: productId, stock: 15 });
+
+        mockProductRepository.findById.mockResolvedValue(existingProduct);
+        mockProductRepository.update.mockResolvedValue(updatedProduct);
+
+        // Act
+        const result = await updateProductStock(
+          mockProductRepository,
+          productId,
+          15
+        );
+
+        // Assert
+        expect(result).toEqual(updatedProduct);
+        expect(mockProductRepository.findById).toHaveBeenCalledWith(productId);
+        expect(mockProductRepository.update).toHaveBeenCalledWith(productId, {
+          stock: 15,
+        });
+      });
+
+      it("should handle stock update to zero", async () => {
+        // Arrange
+        const productId = "product-1";
+        const existingProduct = createMockProduct({ id: productId, stock: 5 });
+        const updatedProduct = createMockProduct({ id: productId, stock: 0 });
+
+        mockProductRepository.findById.mockResolvedValue(existingProduct);
+        mockProductRepository.update.mockResolvedValue(updatedProduct);
+
+        // Act
+        const result = await updateProductStock(
+          mockProductRepository,
+          productId,
+          0
+        );
+
+        // Assert
+        expect(result).toEqual(updatedProduct);
+        expect(mockProductRepository.update).toHaveBeenCalledWith(productId, {
+          stock: 0,
+        });
+      });
     });
 
-    describe("updateProductStock", () => {
-        describe("when product exists", () => {
-            it("should update stock and save to repository", async () => {
-                // Arrange
-                const productId = "product-1";
-                const existingProduct = createMockProduct({ id: productId, stock: 10 });
-                const updatedProduct = createMockProduct({ id: productId, stock: 15 });
+    describe("when product does not exist", () => {
+      it("should throw error", async () => {
+        // Arrange
+        const productId = "non-existent";
+        mockProductRepository.findById.mockResolvedValue(null);
 
-                mockProductRepository.findById.mockResolvedValue(existingProduct);
-                mockProductRepository.update.mockResolvedValue(updatedProduct);
-
-                // Act
-                const result = await updateProductStock(mockProductRepository, productId, 15);
-
-                // Assert
-                expect(result).toEqual(updatedProduct);
-                expect(mockProductRepository.findById).toHaveBeenCalledWith(productId);
-                expect(mockProductRepository.update).toHaveBeenCalledWith(productId, { stock: 15 });
-            });
-
-            it("should handle stock update to zero", async () => {
-                // Arrange
-                const productId = "product-1";
-                const existingProduct = createMockProduct({ id: productId, stock: 5 });
-                const updatedProduct = createMockProduct({ id: productId, stock: 0 });
-
-                mockProductRepository.findById.mockResolvedValue(existingProduct);
-                mockProductRepository.update.mockResolvedValue(updatedProduct);
-
-                // Act
-                const result = await updateProductStock(mockProductRepository, productId, 0);
-
-                // Assert
-                expect(result).toEqual(updatedProduct);
-                expect(mockProductRepository.update).toHaveBeenCalledWith(productId, { stock: 0 });
-            });
-        });
-
-        describe("when product does not exist", () => {
-            it("should throw error", async () => {
-                // Arrange
-                const productId = "non-existent";
-                mockProductRepository.findById.mockResolvedValue(null);
-
-                // Act & Assert
-                await expect(updateProductStock(mockProductRepository, productId, 10)).rejects.toThrow("Product not found");
-                expect(mockProductRepository.update).not.toHaveBeenCalled();
-            });
-        });
-
-        describe("when repository fails", () => {
-            it("should propagate error", async () => {
-                // Arrange
-                const productId = "product-1";
-                const error = new Error("Database error");
-                mockProductRepository.findById.mockRejectedValue(error);
-
-                // Act & Assert
-                await expect(updateProductStock(mockProductRepository, productId, 10)).rejects.toThrow("Database error");
-            });
-        });
+        // Act & Assert
+        await expect(
+          updateProductStock(mockProductRepository, productId, 10)
+        ).rejects.toThrow("Product not found");
+        expect(mockProductRepository.update).not.toHaveBeenCalled();
+      });
     });
 
-    describe("getLowStockProducts", () => {
-        describe("when products exist", () => {
-            it("should return only products with stock below threshold", async () => {
-                // Arrange
-                const allProducts = [
-                    createMockProduct({ id: "1", stock: 5 }), // Low stock
-                    createMockProduct({ id: "2", stock: 15 }), // Normal stock
-                    createMockProduct({ id: "3", stock: 2 }), // Low stock
-                ];
-                mockProductRepository.list.mockResolvedValue(allProducts);
+    describe("when repository fails", () => {
+      it("should propagate error", async () => {
+        // Arrange
+        const productId = "product-1";
+        const error = new Error("Database error");
+        mockProductRepository.findById.mockRejectedValue(error);
 
-                // Act
-                const result = await getLowStockProducts(mockProductRepository, 10);
-
-                // Assert
-                expect(result).toHaveLength(2);
-                expect(result[0].id).toBe("1");
-                expect(result[1].id).toBe("3");
-            });
-
-            it("should return empty array when no low stock products", async () => {
-                // Arrange
-                const allProducts = [createMockProduct({ id: "1", stock: 15 }), createMockProduct({ id: "2", stock: 20 })];
-                mockProductRepository.list.mockResolvedValue(allProducts);
-
-                // Act
-                const result = await getLowStockProducts(mockProductRepository, 10);
-
-                // Assert
-                expect(result).toEqual([]);
-            });
-        });
-
-        describe("when no products exist", () => {
-            it("should return empty array", async () => {
-                // Arrange
-                mockProductRepository.list.mockResolvedValue([]);
-
-                // Act
-                const result = await getLowStockProducts(mockProductRepository, 10);
-
-                // Assert
-                expect(result).toEqual([]);
-            });
-        });
+        // Act & Assert
+        await expect(
+          updateProductStock(mockProductRepository, productId, 10)
+        ).rejects.toThrow("Database error");
+      });
     });
+  });
+
+  describe("getLowStockProducts", () => {
+    describe("when products exist", () => {
+      it("should return only products with stock below threshold", async () => {
+        // Arrange
+        const allProducts = [
+          createMockProduct({ id: "1", stock: 5 }), // Low stock
+          createMockProduct({ id: "2", stock: 15 }), // Normal stock
+          createMockProduct({ id: "3", stock: 2 }), // Low stock
+        ];
+        mockProductRepository.list.mockResolvedValue(allProducts);
+
+        // Act
+        const result = await getLowStockProducts(mockProductRepository, 10);
+
+        // Assert
+        expect(result).toHaveLength(2);
+        expect(result[0].id).toBe("1");
+        expect(result[1].id).toBe("3");
+      });
+
+      it("should return empty array when no low stock products", async () => {
+        // Arrange
+        const allProducts = [
+          createMockProduct({ id: "1", stock: 15 }),
+          createMockProduct({ id: "2", stock: 20 }),
+        ];
+        mockProductRepository.list.mockResolvedValue(allProducts);
+
+        // Act
+        const result = await getLowStockProducts(mockProductRepository, 10);
+
+        // Assert
+        expect(result).toEqual([]);
+      });
+    });
+
+    describe("when no products exist", () => {
+      it("should return empty array", async () => {
+        // Arrange
+        mockProductRepository.list.mockResolvedValue([]);
+
+        // Act
+        const result = await getLowStockProducts(mockProductRepository, 10);
+
+        // Assert
+        expect(result).toEqual([]);
+      });
+    });
+  });
 });
 ```
 
@@ -756,14 +816,14 @@ Always structure tests in three clear sections:
 
 ```typescript
 it("should do something", () => {
-    // Arrange: Set up test data and mocks
-    const input = "test";
+  // Arrange: Set up test data and mocks
+  const input = "test";
 
-    // Act: Execute the code being tested
-    const result = functionUnderTest(input);
+  // Act: Execute the code being tested
+  const result = functionUnderTest(input);
 
-    // Assert: Verify the expected outcome
-    expect(result).toBe("expected");
+  // Assert: Verify the expected outcome
+  expect(result).toBe("expected");
 });
 ```
 
@@ -781,13 +841,13 @@ Focus each test on a single behavior:
 ```typescript
 // ✅ Good - Single assertion
 it("should return true for low stock", () => {
-    expect(isLowStock(product, 10)).toBe(true);
+  expect(isLowStock(product, 10)).toBe(true);
 });
 
 // ❌ Avoid - Multiple unrelated assertions
 it("should handle stock calculations", () => {
-    expect(isLowStock(product, 10)).toBe(true);
-    expect(calculateTotal([product])).toBe(100);
+  expect(isLowStock(product, 10)).toBe(true);
+  expect(calculateTotal([product])).toBe(100);
 });
 ```
 
@@ -797,7 +857,7 @@ Always reset mocks between tests:
 
 ```typescript
 beforeEach(() => {
-    jest.clearAllMocks();
+  jest.clearAllMocks();
 });
 ```
 
@@ -808,12 +868,12 @@ Always type your mocks and test data:
 ```typescript
 // ✅ Good
 const mockProduct: Product = {
-    /* ... */
+  /* ... */
 };
 
 // ❌ Avoid
 const mockProduct = {
-    /* ... */
+  /* ... */
 }; // No type annotation
 ```
 

@@ -6,9 +6,9 @@
 
 Workbench is **not** meant to replicate Jira, but to provide:
 
--   A clean backlog for managing tickets
--   A visual board (Trello-like) for workflow visualization
--   Structured planning via Epics and sub-tasks
+- A clean backlog for managing tickets
+- A visual board (Trello-like) for workflow visualization
+- Structured planning via Epics and sub-tasks
 
 All built **incrementally, feature by feature**, where each feature is a complete vertical slice that is usable on its own.
 
@@ -21,19 +21,19 @@ All built **incrementally, feature by feature**, where each feature is a complet
 
 ### Core Features (MVP Scope)
 
--   **Backlog**: Create, edit, delete, view, filter, and sort tickets in a flat list
--   **Board**: Custom columns (statuses), drag and drop tickets, reorder within columns, persist position and status
--   **Epics**: Create epics, assign tickets to epics, view epic progress
--   **Sub-tasks**: Create sub-tasks under tickets, view parent/child relationships, track completion
+- **Backlog**: Create, edit, delete, view, filter, and sort tickets in a flat list
+- **Board**: Custom columns (statuses), drag and drop tickets, reorder within columns, persist position and status
+- **Epics**: Create epics, assign tickets to epics, view epic progress
+- **Sub-tasks**: Create sub-tasks under tickets, view parent/child relationships, track completion
 
 ### Architecture
 
 Workbench follows **Clean Architecture** principles with clear separation between:
 
--   **Domain**: Entities and business rules
--   **Application**: Use cases, commands and queries
--   **Infrastructure**: Database and repositories
--   **UI**: Pages and view models
+- **Domain**: Entities and business rules
+- **Application**: Use cases, commands and queries
+- **Infrastructure**: Database and repositories
+- **UI**: Pages and view models
 
 The domain knows nothing about frameworks, databases, or UI.
 
@@ -54,7 +54,7 @@ No feature is started until the previous one is fully done.
 
 Workbench is successful if:
 
--   It replaces ad-hoc notes and mental tracking
--   Managing tasks feels calm and predictable
--   The system remains understandable after months away
--   Every feature has a clear reason to exist
+- It replaces ad-hoc notes and mental tracking
+- Managing tasks feels calm and predictable
+- The system remains understandable after months away
+- Every feature has a clear reason to exist

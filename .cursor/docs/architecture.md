@@ -6,10 +6,10 @@ This project follows **strict Clean Architecture**.
 
 The goal is to clearly separate responsibilities:
 
--   **Domain** → pure business rules, types and logic without dependencies
--   **Usecases (Application)** → business logic orchestrating repositories
--   **Infrastructure** → data access (Supabase), concrete implementations
--   **Presentation** → Next.js UI, SCSS, state management (Zustand), data fetching (React Query)
+- **Domain** → pure business rules, types and logic without dependencies
+- **Usecases (Application)** → business logic orchestrating repositories
+- **Infrastructure** → data access (Supabase), concrete implementations
+- **Presentation** → Next.js UI, SCSS, state management (Zustand), data fetching (React Query)
 
 ### Golden Rule
 
@@ -19,11 +19,11 @@ The goal is to clearly separate responsibilities:
 
 Cursor must respect layer independence:
 
--   The UI **never** calls Supabase directly
--   The UI calls React Query hooks, which execute usecases
--   Usecases use ports to contact the database
--   Ports have multiple possible implementations
--   Concrete implementations (Supabase) are in `infrastructure/`
+- The UI **never** calls Supabase directly
+- The UI calls React Query hooks, which execute usecases
+- Usecases use ports to contact the database
+- Ports have multiple possible implementations
+- Concrete implementations (Supabase) are in `infrastructure/`
 
 ---
 
@@ -77,16 +77,16 @@ src/
 
 **Contains:**
 
--   Business types/interfaces
--   Pure business rules
+- Business types/interfaces
+- Pure business rules
 
 **Must never import:**
 
--   ❌ Supabase
--   ❌ React
--   ❌ Zustand
--   ❌ React Query
--   ❌ Next.js
+- ❌ Supabase
+- ❌ React
+- ❌ Zustand
+- ❌ React Query
+- ❌ Next.js
 
 **Pure TypeScript only.**
 
@@ -96,21 +96,21 @@ src/
 
 **Characteristics:**
 
--   Each usecase is a pure function orchestrating business logic
--   It takes ports (repositories) as parameters
--   It returns domain data
+- Each usecase is a pure function orchestrating business logic
+- It takes ports (repositories) as parameters
+- It returns domain data
 
 **Must not know about:**
 
--   ❌ Supabase
--   ❌ React
--   ❌ Zustand
+- ❌ Supabase
+- ❌ React
+- ❌ Zustand
 
 **Structure example:**
 
 ```typescript
 export async function listProducts(repo: ProductRepository) {
-    return repo.list();
+  return repo.list();
 }
 ```
 
@@ -120,9 +120,9 @@ export async function listProducts(repo: ProductRepository) {
 
 **Role:**
 
--   Define repository interfaces
--   Example: `ProductRepository`, `StockMovementRepository`
--   These are the contracts that infrastructure must respect
+- Define repository interfaces
+- Example: `ProductRepository`, `StockMovementRepository`
+- These are the contracts that infrastructure must respect
 
 ---
 
@@ -130,29 +130,29 @@ export async function listProducts(repo: ProductRepository) {
 
 **Contains:**
 
--   Concrete implementations of ports
--   Supabase
--   Adapters
--   Mappers
+- Concrete implementations of ports
+- Supabase
+- Adapters
+- Mappers
 
 **Can import:**
 
--   ✅ Supabase
--   ✅ Fetch
--   ✅ External libraries
+- ✅ Supabase
+- ✅ Fetch
+- ✅ External libraries
 
 **Must never import:**
 
--   ❌ UI
--   ❌ Zustand
+- ❌ UI
+- ❌ Zustand
 
 **Example:**
 
 ```typescript
 export const productRepositorySupabase: ProductRepository = {
-    list: async () => {
-        // ...supabase.from("products")...
-    },
+  list: async () => {
+    // ...supabase.from("products")...
+  },
 };
 ```
 
@@ -164,28 +164,28 @@ export const productRepositorySupabase: ProductRepository = {
 
 **Characteristics:**
 
--   Pure UI components
--   No business logic
--   No Supabase calls
--   Receive ready data via props
+- Pure UI components
+- No business logic
+- No Supabase calls
+- Receive ready data via props
 
 #### 5.2. Hooks (`presentation/hooks`)
 
 **Role:**
 
--   React Query hooks
--   Call usecases
--   Provide: `data`, `isLoading`, `error`
--   Do not contain business logic → only orchestrate usecases
+- React Query hooks
+- Call usecases
+- Provide: `data`, `isLoading`, `error`
+- Do not contain business logic → only orchestrate usecases
 
 **Recommended structure:**
 
 ```typescript
 export function useProducts() {
-    return useQuery({
-        queryKey: ["products"],
-        queryFn: () => listProducts(productRepositorySupabase),
-    });
+  return useQuery({
+    queryKey: ["products"],
+    queryFn: () => listProducts(productRepositorySupabase),
+  });
 }
 ```
 
@@ -193,10 +193,10 @@ export function useProducts() {
 
 **Contains only UI state:**
 
--   Filters
--   Modals
--   Selected category
--   Drawer state
+- Filters
+- Modals
+- Selected category
+- Drawer state
 
 **Must never contain business logic.**
 
@@ -204,20 +204,20 @@ export function useProducts() {
 
 **Contains:**
 
--   ReactQueryProvider
--   Global app providers
+- ReactQueryProvider
+- Global app providers
 
 ---
 
 ## ⚡ Modules Used in the Project
 
--   **Next.js** (App Router)
--   **SCSS** (global.scss + SCSS modules if needed)
--   **Supabase** → self-hosted backend (no Node backend)
--   **React Query** (TanStack Query) → data fetching & cache
--   **Zustand** → lightweight global UI state
--   **TypeScript strict**
--   **Clean Architecture** (Core / Infrastructure / Presentation)
+- **Next.js** (App Router)
+- **SCSS** (global.scss + SCSS modules if needed)
+- **Supabase** → self-hosted backend (no Node backend)
+- **React Query** (TanStack Query) → data fetching & cache
+- **Zustand** → lightweight global UI state
+- **TypeScript strict**
+- **Clean Architecture** (Core / Infrastructure / Presentation)
 
 ---
 
@@ -227,10 +227,10 @@ export function useProducts() {
 
 1. Create files in the correct directories according to their role
 2. Respect layers:
-    - A usecase must not import Supabase
-    - A UI component must not call Supabase directly
-    - A Zustand store must not contain business logic
-    - A React Query hook must call a usecase, not directly infrastructure
+   - A usecase must not import Supabase
+   - A UI component must not call Supabase directly
+   - A Zustand store must not contain business logic
+   - A React Query hook must call a usecase, not directly infrastructure
 3. Create proper types in the domain
 
 ### ❌ Cursor must never:
