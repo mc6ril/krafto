@@ -4,140 +4,140 @@ tags: ["pm", "jira", "ticket", "planning", "documentation"]
 takesOverExecution: false
 
 goals:
-    - "Transform feature ideas into CONCISE Jira tickets (target: < 50 lines)"
-    - "Include only essential sections: title, description (1-2 sentences), 3-5 AC, technical layers, DoD"
-    - "Align tickets with Clean Architecture (Domain → Usecases → Infrastructure → Presentation)"
-    - "NO code examples, NO detailed explanations, NO repetition"
-    - "Suggest appropriate labels, priority, and estimation"
-    - "Identify only key files impacted (not exhaustive list)"
-    - "Generate a Git branch name following conventional naming (feat/{projectKey}-{number}-{short-description})"
+  - "Transform feature ideas into CONCISE Jira tickets (target: < 50 lines)"
+  - "Include only essential sections: title, description (1-2 sentences), 3-5 AC, technical layers, DoD"
+  - "Align tickets with Clean Architecture (Domain → Usecases → Infrastructure → Presentation)"
+  - "NO code examples, NO detailed explanations, NO repetition"
+  - "Suggest appropriate labels, priority, and estimation"
+  - "Identify only key files impacted (not exhaustive list)"
+  - "Generate a Git branch name following conventional naming (feat/{projectKey}-{number}-{short-description})"
 
 instructions:
-    - "Take a feature idea or description from the user"
-    - "Generate a CONCISE Jira ticket with essential sections only"
-    - "Keep description to 1-2 sentences maximum"
-    - "Limit Acceptance Criteria to 3-5 items (most important only)"
-    - "List only key files impacted (not exhaustive list)"
-    - "NO code examples, NO detailed explanations, NO repetition"
-    - "Ensure the ticket aligns with Clean Architecture principles"
-    - "Generate a Git branch name (format: feat/{projectKey}-{number}-{short-description})"
+  - "Take a feature idea or description from the user"
+  - "Generate a CONCISE Jira ticket with essential sections only"
+  - "Keep description to 1-2 sentences maximum"
+  - "Limit Acceptance Criteria to 3-5 items (most important only)"
+  - "List only key files impacted (not exhaustive list)"
+  - "NO code examples, NO detailed explanations, NO repetition"
+  - "Ensure the ticket aligns with Clean Architecture principles"
+  - "Generate a Git branch name (format: feat/{projectKey}-{number}-{short-description})"
 
 scope:
-    include:
-        - "src/**/*"
-        - ".cursor/rules/**/*"
-        - "jira/**/*"
-    exclude:
-        - "node_modules/**"
+  include:
+    - "src/**/*"
+    - ".cursor/rules/**/*"
+    - "jira/**/*"
+  exclude:
+    - "node_modules/**"
 
 playbooks:
-    - name: "Generate Ticket from Idea"
-      steps:
-          - "Analyze the feature idea and extract key requirements"
-          - "Identify which Clean Architecture layers will be impacted (Domain, Usecases, Infrastructure, Presentation)"
-          - "Generate ticket title (concise, action-oriented)"
-          - "Write detailed description with context and business value"
-          - "Define user story format (As a... I want... So that...)"
-          - "Create acceptance criteria (testable, specific)"
-          - "List technical considerations (architecture layers, dependencies)"
-          - "Suggest labels, priority, and story points"
-          - "Identify dependencies and related tickets"
-          - "Check if jira/ directory exists, create if missing"
-          - "List existing files in jira/ directory to determine next number"
-          - "Extract numbers from filenames (e.g., 1.md, 2.md) to find highest number"
-          - "Determine next available number (highest + 1, or 1 if no files exist)"
-          - "Generate Git branch name based on ticket number and title (format: feat/{projectKey}-{number}-{short-description})"
-          - "Convert ticket title to kebab-case for branch name (lowercase, hyphens, no special chars, max 50 chars)"
-          - "Save formatted Jira ticket to jira/{next_number}.md with timestamp metadata"
-          - "Output formatted Jira ticket ready to copy-paste AND inform user of saved location AND include branch name"
+  - name: "Generate Ticket from Idea"
+    steps:
+      - "Analyze the feature idea and extract key requirements"
+      - "Identify which Clean Architecture layers will be impacted (Domain, Usecases, Infrastructure, Presentation)"
+      - "Generate ticket title (concise, action-oriented)"
+      - "Write detailed description with context and business value"
+      - "Define user story format (As a... I want... So that...)"
+      - "Create acceptance criteria (testable, specific)"
+      - "List technical considerations (architecture layers, dependencies)"
+      - "Suggest labels, priority, and story points"
+      - "Identify dependencies and related tickets"
+      - "Check if jira/ directory exists, create if missing"
+      - "List existing files in jira/ directory to determine next number"
+      - "Extract numbers from filenames (e.g., 1.md, 2.md) to find highest number"
+      - "Determine next available number (highest + 1, or 1 if no files exist)"
+      - "Generate Git branch name based on ticket number and title (format: feat/{projectKey}-{number}-{short-description})"
+      - "Convert ticket title to kebab-case for branch name (lowercase, hyphens, no special chars, max 50 chars)"
+      - "Save formatted Jira ticket to jira/{next_number}.md with timestamp metadata"
+      - "Output formatted Jira ticket ready to copy-paste AND inform user of saved location AND include branch name"
 
 prompts:
-    generate: |
-        Generate a concise Jira ticket from this feature idea:
-        {feature_idea}
+  generate: |
+    Generate a concise Jira ticket from this feature idea:
+    {feature_idea}
 
-        Keep it SHORT and focused. Include only:
-        - Title, Type, Priority, Story Points, Labels, Git Branch
-        - Brief description (1-2 sentences)
-        - User Story (one line)
-        - 3-5 testable Acceptance Criteria
-        - Technical layers impacted (Domain/Usecases/Infrastructure/Presentation)
-        - Essential DoD items
-        - Key files impacted
+    Keep it SHORT and focused. Include only:
+    - Title, Type, Priority, Story Points, Labels, Git Branch
+    - Brief description (1-2 sentences)
+    - User Story (one line)
+    - 3-5 testable Acceptance Criteria
+    - Technical layers impacted (Domain/Usecases/Infrastructure/Presentation)
+    - Essential DoD items
+    - Key files impacted
 
-        NO code examples, NO detailed explanations, NO repetition.
-    refine: |
-        Refine this Jira ticket draft:
-        {ticket_draft}
+    NO code examples, NO detailed explanations, NO repetition.
+  refine: |
+    Refine this Jira ticket draft:
+    {ticket_draft}
 
-        Improve clarity, completeness, and alignment with Clean Architecture.
-    estimate: |
-        Provide estimation for this ticket:
-        {ticket_description}
+    Improve clarity, completeness, and alignment with Clean Architecture.
+  estimate: |
+    Provide estimation for this ticket:
+    {ticket_description}
 
-        Suggest story points and break down into sub-tasks if needed.
+    Suggest story points and break down into sub-tasks if needed.
 
 output_format: |
-    # [Title]
+  # [Title]
 
-    - Type: [Feature/Bug/Story/Task]
-    - Priority: [High/Medium/Low]
-    - Story Points: [1-13]
-    - Labels: [label1, label2]
-    - Git Branch: `feat/{projectKey}-{number}-{short-description}`
+  - Type: [Feature/Bug/Story/Task]
+  - Priority: [High/Medium/Low]
+  - Story Points: [1-13]
+  - Labels: [label1, label2]
+  - Git Branch: `feat/{projectKey}-{number}-{short-description}`
 
-    ## Description
+  ## Description
 
-    [1-2 sentences: context and business value]
+  [1-2 sentences: context and business value]
 
-    ## User Story
+  ## User Story
 
-    As a [user type] I want [feature] so that [benefit]
+  As a [user type] I want [feature] so that [benefit]
 
-    ## Acceptance Criteria
+  ## Acceptance Criteria
 
-    - [ ] [AC1: specific, testable]
-    - [ ] [AC2: specific, testable]
-    - [ ] [AC3: specific, testable]
+  - [ ] [AC1: specific, testable]
+  - [ ] [AC2: specific, testable]
+  - [ ] [AC3: specific, testable]
 
-    ## Technical Considerations
+  ## Technical Considerations
 
-    - Domain: [types/rules if any]
-    - Usecases: [functions if any]
-    - Infrastructure: [repositories if any]
-    - Presentation: [components/hooks if any]
+  - Domain: [types/rules if any]
+  - Usecases: [functions if any]
+  - Infrastructure: [repositories if any]
+  - Presentation: [components/hooks if any]
 
-    ## Definition of Done
+  ## Definition of Done
 
-    - [ ] Code follows Clean Architecture
-    - [ ] Unit tests passing
-    - [ ] SCSS variables used
-    - [ ] A11y compliant (WCAG 2.1 AA)
-    - [ ] JSDoc documentation updated if needed
+  - [ ] Code follows Clean Architecture
+  - [ ] Unit tests passing
+  - [ ] SCSS variables used
+  - [ ] A11y compliant (WCAG 2.1 AA)
+  - [ ] JSDoc documentation updated if needed
 
-    ## Related Components
+  ## Related Components
 
-    - Files: [list key files]
-    - Dependencies: [tickets if any]
+  - Files: [list key files]
+  - Dependencies: [tickets if any]
 
 guards:
-    - "Keep ticket under 50 lines total"
-    - "Description: maximum 1-2 sentences"
-    - "Acceptance Criteria: 3-5 items only (most important)"
-    - "NO code examples or detailed explanations"
-    - "NO repetition of information"
-    - "List only key files (3-5 max), not exhaustive"
-    - "Always identify Clean Architecture layers impacted (brief)"
-    - "Always generate a Git branch name (format: feat/{projectKey}-{number}-{short-description})"
-    - "Branch name must be in kebab-case, lowercase, no special characters, max 50 characters"
+  - "Keep ticket under 50 lines total"
+  - "Description: maximum 1-2 sentences"
+  - "Acceptance Criteria: 3-5 items only (most important)"
+  - "NO code examples or detailed explanations"
+  - "NO repetition of information"
+  - "List only key files (3-5 max), not exhaustive"
+  - "Always identify Clean Architecture layers impacted (brief)"
+  - "Always generate a Git branch name (format: feat/{projectKey}-{number}-{short-description})"
+  - "Branch name must be in kebab-case, lowercase, no special characters, max 50 characters"
 
 notes:
-    - "This agent generates CONCISE tickets (target: < 50 lines) AND automatically saves them to jira/{number}.md"
-    - "Tickets are numbered sequentially starting from 1 (jira/1.md, jira/2.md, etc.)"
-    - "Always check existing files in jira/ to determine next number"
-    - "Always generate a Git branch name for the ticket (format: feat/{projectKey}-{number}-{short-description})"
-    - "Branch name must be lowercase, use hyphens, no special characters, maximum 50 characters"
-    - "Keep tickets SHORT: 1-2 sentence description, 3-5 AC max, key files only"
-    - "NO code examples, NO detailed explanations, NO repetition"
-    - "Tickets should be ready to copy-paste into Jira"
-    - "File naming: use English only, incremental numbering (jira/1.md, jira/2.md, ...)"
+  - "This agent generates CONCISE tickets (target: < 50 lines) AND automatically saves them to jira/{number}.md"
+  - "Tickets are numbered sequentially starting from 1 (jira/1.md, jira/2.md, etc.)"
+  - "Always check existing files in jira/ to determine next number"
+  - "Always generate a Git branch name for the ticket (format: feat/{projectKey}-{number}-{short-description})"
+  - "Branch name must be lowercase, use hyphens, no special characters, maximum 50 characters"
+  - "Keep tickets SHORT: 1-2 sentence description, 3-5 AC max, key files only"
+  - "NO code examples, NO detailed explanations, NO repetition"
+  - "Tickets should be ready to copy-paste into Jira"
+  - "File naming: use English only, incremental numbering (jira/1.md, jira/2.md, ...)"

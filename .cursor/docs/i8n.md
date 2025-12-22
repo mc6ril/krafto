@@ -4,13 +4,13 @@ This directory contains the internationalization (i18n) infrastructure for this 
 
 ## Structure
 
--   `config.ts` - i18n configuration and locale settings
--   `types.ts` - TypeScript type definitions for locales and translation keys
--   `useTranslation.ts` - React hook for accessing translations
--   `utils.ts` - General utility functions for translation keys
--   `dynamic.ts` - Utilities for dynamic translations (conditional, interpolation, pluralization)
--   `messages/` - Translation files organized by locale
-    -   `fr.json` - French translations (default locale)
+- `config.ts` - i18n configuration and locale settings
+- `types.ts` - TypeScript type definitions for locales and translation keys
+- `useTranslation.ts` - React hook for accessing translations
+- `utils.ts` - General utility functions for translation keys
+- `dynamic.ts` - Utilities for dynamic translations (conditional, interpolation, pluralization)
+- `messages/` - Translation files organized by locale
+  - `fr.json` - French translations (default locale)
 
 ## Usage
 
@@ -20,9 +20,9 @@ This directory contains the internationalization (i18n) infrastructure for this 
 import { useTranslation } from "@/shared/i18n";
 
 const MyComponent = () => {
-    const t = useTranslation("common");
+  const t = useTranslation("common");
 
-    return <button>{t("loading")}</button>; // "Chargement en cours..."
+  return <button>{t("loading")}</button>; // "Chargement en cours..."
 };
 ```
 
@@ -32,22 +32,25 @@ For activity type-specific labels:
 
 ```tsx
 import { useTranslation } from "@/shared/i18n";
-import { getActivityQuantityLabelKey, getActivityHelperTextKey } from "@/shared/i18n/dynamic";
+import {
+  getActivityQuantityLabelKey,
+  getActivityHelperTextKey,
+} from "@/shared/i18n/dynamic";
 import { ActivityType } from "@/core/domain/activity";
 
 const ActivityForm = () => {
-    const t = useTranslation("forms.activity.fields.quantity");
-    const activityType = ActivityType.SALE;
+  const t = useTranslation("forms.activity.fields.quantity");
+  const activityType = ActivityType.SALE;
 
-    // Get label key based on activity type
-    const labelKey = getActivityQuantityLabelKey(activityType);
-    const label = t(labelKey); // "Quantité vendue" for SALE, "Quantité" for others
+  // Get label key based on activity type
+  const labelKey = getActivityQuantityLabelKey(activityType);
+  const label = t(labelKey); // "Quantité vendue" for SALE, "Quantité" for others
 
-    // Get helper text key based on activity type
-    const helperKey = getActivityHelperTextKey(activityType);
-    const helperText = helperKey ? t(helperKey) : undefined;
+  // Get helper text key based on activity type
+  const helperKey = getActivityHelperTextKey(activityType);
+  const helperText = helperKey ? t(helperKey) : undefined;
 
-    return <Input label={label} helperText={helperText} />;
+  return <Input label={label} helperText={helperText} />;
 };
 ```
 
@@ -60,13 +63,13 @@ import { useTranslation } from "@/shared/i18n";
 import { createInterpolatedTranslation } from "@/shared/i18n/dynamic";
 
 const MyComponent = () => {
-    const t = useTranslation("common");
-    const translate = createInterpolatedTranslation(t);
+  const t = useTranslation("common");
+  const translate = createInterpolatedTranslation(t);
 
-    // Translation key: "welcome": "Bienvenue, {name}!"
-    const message = translate("welcome", { name: "John" }); // "Bienvenue, John!"
+  // Translation key: "welcome": "Bienvenue, {name}!"
+  const message = translate("welcome", { name: "John" }); // "Bienvenue, John!"
 
-    return <p>{message}</p>;
+  return <p>{message}</p>;
 };
 ```
 
@@ -79,15 +82,15 @@ import { useTranslation } from "@/shared/i18n";
 import { createPluralKey } from "@/shared/i18n/dynamic";
 
 const MyComponent = ({ count }: { count: number }) => {
-    const t = useTranslation("common");
+  const t = useTranslation("common");
 
-    // Translation keys:
-    // "items": "{count} article"
-    // "items_other": "{count} articles"
-    const key = createPluralKey("items", count);
-    const message = t(key, { count }); // "1 article" or "5 articles"
+  // Translation keys:
+  // "items": "{count} article"
+  // "items_other": "{count} articles"
+  const key = createPluralKey("items", count);
+  const message = t(key, { count }); // "1 article" or "5 articles"
 
-    return <p>{message}</p>;
+  return <p>{message}</p>;
 };
 ```
 
@@ -100,16 +103,16 @@ import { useTranslation } from "@/shared/i18n";
 import { getConditionalTranslation } from "@/shared/i18n/dynamic";
 
 const MyComponent = ({ isSale }: { isSale: boolean }) => {
-    const t = useTranslation("forms.activity.fields.quantity");
+  const t = useTranslation("forms.activity.fields.quantity");
 
-    const labelKey = getConditionalTranslation(
-        isSale,
-        "label_sale", // "Quantité vendue"
-        "label" // "Quantité"
-    );
-    const label = t(labelKey);
+  const labelKey = getConditionalTranslation(
+    isSale,
+    "label_sale", // "Quantité vendue"
+    "label" // "Quantité"
+  );
+  const label = t(labelKey);
 
-    return <Input label={label} />;
+  return <Input label={label} />;
 };
 ```
 
@@ -117,12 +120,12 @@ const MyComponent = ({ isSale }: { isSale: boolean }) => {
 
 Translation keys are organized by domain using dot notation:
 
--   `common.*` - Common UI messages (loading, buttons, etc.)
--   `forms.activity.*` - Activity form translations
--   `forms.product.*` - Product form translations
--   `errors.*` - Error messages
--   `pages.*` - Page-specific translations
--   `empty.*` - Empty state messages
+- `common.*` - Common UI messages (loading, buttons, etc.)
+- `forms.activity.*` - Activity form translations
+- `forms.product.*` - Product form translations
+- `errors.*` - Error messages
+- `pages.*` - Page-specific translations
+- `empty.*` - Empty state messages
 
 ## Type Safety
 
@@ -158,7 +161,7 @@ Use `createPluralKey()` to construct pluralized keys, or use ICU message format 
 
 ```json
 {
-    "items": "{count, plural, one {# article} other {# articles}}"
+  "items": "{count, plural, one {# article} other {# articles}}"
 }
 ```
 
@@ -176,52 +179,50 @@ Use `createPluralKey()` to construct pluralized keys, or use ICU message format 
 
 Translation keys follow a hierarchical dot notation structure organized by domain:
 
--   **Namespace** (first level): Domain or feature area
+- **Namespace** (first level): Domain or feature area
+  - `common.*` - Common UI messages (loading, buttons, etc.)
+  - `forms.*` - Form-related translations
+  - `errors.*` - Error messages
+  - `pages.*` - Page-specific translations
+  - `empty.*` - Empty state messages
+  - `ui.*` - UI component-specific translations
+  - `dashboard.*` - Dashboard-specific translations
 
-    -   `common.*` - Common UI messages (loading, buttons, etc.)
-    -   `forms.*` - Form-related translations
-    -   `errors.*` - Error messages
-    -   `pages.*` - Page-specific translations
-    -   `empty.*` - Empty state messages
-    -   `ui.*` - UI component-specific translations
-    -   `dashboard.*` - Dashboard-specific translations
+- **Sub-namespace** (second level): Feature or component
+  - `forms.activity.*` - Activity form translations
+  - `forms.product.*` - Product form translations
+  - `errors.dashboard.*` - Dashboard error messages
+  - `pages.catalog.*` - Catalog page translations
 
--   **Sub-namespace** (second level): Feature or component
-
-    -   `forms.activity.*` - Activity form translations
-    -   `forms.product.*` - Product form translations
-    -   `errors.dashboard.*` - Dashboard error messages
-    -   `pages.catalog.*` - Catalog page translations
-
--   **Key** (final level): Specific message identifier
-    -   Use camelCase: `label`, `helperText`, `placeholder`
-    -   Use descriptive names: `addProduct`, `editActivity`
-    -   Use suffixes for variations: `label_sale`, `helper_creation`
+- **Key** (final level): Specific message identifier
+  - Use camelCase: `label`, `helperText`, `placeholder`
+  - Use descriptive names: `addProduct`, `editActivity`
+  - Use suffixes for variations: `label_sale`, `helper_creation`
 
 ### Examples
 
 ```json
 {
-    "common": {
-        "loading": "Chargement en cours...",
-        "cancel": "Annuler"
-    },
-    "forms": {
-        "activity": {
-            "fields": {
-                "quantity": {
-                    "label": "Quantité",
-                    "label_sale": "Quantité vendue",
-                    "helper_creation": "Quantité ajoutée au stock"
-                }
-            }
+  "common": {
+    "loading": "Chargement en cours...",
+    "cancel": "Annuler"
+  },
+  "forms": {
+    "activity": {
+      "fields": {
+        "quantity": {
+          "label": "Quantité",
+          "label_sale": "Quantité vendue",
+          "helper_creation": "Quantité ajoutée au stock"
         }
-    },
-    "errors": {
-        "dashboard": {
-            "sales": "Erreur lors du chargement des données de ventes..."
-        }
+      }
     }
+  },
+  "errors": {
+    "dashboard": {
+      "sales": "Erreur lors du chargement des données de ventes..."
+    }
+  }
 }
 ```
 
@@ -255,23 +256,23 @@ Add appropriate keys to `src/shared/i18n/messages/fr.json`:
 
 ```json
 {
-    "common": {
-        "cancel": "Annuler"
-    },
-    "forms": {
-        "activity": {
-            "fields": {
-                "quantity": {
-                    "label": "Quantité"
-                }
-            }
+  "common": {
+    "cancel": "Annuler"
+  },
+  "forms": {
+    "activity": {
+      "fields": {
+        "quantity": {
+          "label": "Quantité"
         }
-    },
-    "errors": {
-        "dashboard": {
-            "loading": "Erreur lors du chargement"
-        }
+      }
     }
+  },
+  "errors": {
+    "dashboard": {
+      "loading": "Erreur lors du chargement"
+    }
+  }
 }
 ```
 
@@ -284,17 +285,17 @@ Replace hardcoded strings with translation calls:
 import { useTranslation } from "@/shared/i18n";
 
 const MyComponent = () => {
-    const tCommon = useTranslation("common");
-    const tActivity = useTranslation("forms.activity.fields.quantity");
-    const tErrors = useTranslation("errors.dashboard");
+  const tCommon = useTranslation("common");
+  const tActivity = useTranslation("forms.activity.fields.quantity");
+  const tErrors = useTranslation("errors.dashboard");
 
-    return (
-        <>
-            <button>{tCommon("cancel")}</button>
-            <label>{tActivity("label")}</label>
-            <p>{tErrors("loading")}</p>
-        </>
-    );
+  return (
+    <>
+      <button>{tCommon("cancel")}</button>
+      <label>{tActivity("label")}</label>
+      <p>{tErrors("loading")}</p>
+    </>
+  );
 };
 ```
 
@@ -306,13 +307,13 @@ For conditional or dynamic strings, use helper functions:
 import { getActivityQuantityLabelKey } from "@/shared/i18n/dynamic";
 
 const ActivityForm = ({ activityType }: { activityType: ActivityType }) => {
-    const t = useTranslation("forms.activity.fields.quantity");
+  const t = useTranslation("forms.activity.fields.quantity");
 
-    // Dynamic label based on activity type
-    const labelKey = getActivityQuantityLabelKey(activityType);
-    const label = t(labelKey);
+  // Dynamic label based on activity type
+  const labelKey = getActivityQuantityLabelKey(activityType);
+  const label = t(labelKey);
 
-    return <Input label={label} />;
+  return <Input label={label} />;
 };
 ```
 
@@ -325,20 +326,20 @@ Update tests to use translation keys or mock translations:
 import { useTranslation } from "@/shared/i18n";
 
 jest.mock("@/shared/i18n", () => ({
-    useTranslation: () => (key: string) => key, // Return key as value for tests
+  useTranslation: () => (key: string) => key, // Return key as value for tests
 }));
 ```
 
 ### Migration Checklist
 
--   [ ] Identify all hardcoded user-facing strings
--   [ ] Add translation keys to `messages/fr.json` following naming conventions
--   [ ] Replace hardcoded strings with `useTranslation()` calls
--   [ ] Use dynamic translation utilities for conditional strings
--   [ ] Update ARIA labels to use i18n
--   [ ] Update tests to use translation keys or mocks
--   [ ] Verify no hardcoded strings remain
--   [ ] Test component functionality
+- [ ] Identify all hardcoded user-facing strings
+- [ ] Add translation keys to `messages/fr.json` following naming conventions
+- [ ] Replace hardcoded strings with `useTranslation()` calls
+- [ ] Use dynamic translation utilities for conditional strings
+- [ ] Update ARIA labels to use i18n
+- [ ] Update tests to use translation keys or mocks
+- [ ] Verify no hardcoded strings remain
+- [ ] Test component functionality
 
 ### Deprecated Constants
 

@@ -6,10 +6,10 @@
 
 ## ✨ 1. General Style
 
--   **TypeScript strict** at all times
--   **No `any`** allowed
--   **Prefer explicit types**
--   **Short, readable, and pure functions** — avoid unnecessarily complex logic
+- **TypeScript strict** at all times
+- **No `any`** allowed
+- **Prefer explicit types**
+- **Short, readable, and pure functions** — avoid unnecessarily complex logic
 
 ---
 
@@ -17,16 +17,16 @@
 
 ### SCSS Structure
 
--   **Global SCSS** in `styles/global.scss`
--   **Variables** in `styles/variables/*`
--   **UI Components** in `styles/components/*`
+- **Global SCSS** in `styles/global.scss`
+- **Variables** in `styles/variables/*`
+- **UI Components** in `styles/components/*`
 
 ### SCSS Variables
 
--   ✅ **Always use only variables** from `styles/variables/*` for all styles
--   ❌ **NEVER create styles** with hardcoded values (colors, spacing, sizes, etc.)
--   ✅ **If a variable doesn't exist** in `styles/variables/*`, add it to the dedicated section of the appropriate file
--   ❌ **NEVER use direct values** (e.g., `#fff`, `16px`, `1rem`) without using a variable
+- ✅ **Always use only variables** from `styles/variables/*` for all styles
+- ❌ **NEVER create styles** with hardcoded values (colors, spacing, sizes, etc.)
+- ✅ **If a variable doesn't exist** in `styles/variables/*`, add it to the dedicated section of the appropriate file
+- ❌ **NEVER use direct values** (e.g., `#fff`, `16px`, `1rem`) without using a variable
 
 ### Naming Rules
 
@@ -34,7 +34,7 @@
 
 ```scss
 .product-card {
-    // ...
+  // ...
 }
 ```
 
@@ -42,7 +42,7 @@
 
 ```scss
 .product-card__title {
-    // ...
+  // ...
 }
 ```
 
@@ -50,14 +50,14 @@
 
 ```scss
 .button--primary {
-    // ...
+  // ...
 }
 ```
 
 ### Prohibitions
 
--   ❌ **Zero inline CSS** in React components
--   ❌ **No use of `!important`**
+- ❌ **Zero inline CSS** in React components
+- ❌ **No use of `!important`**
 
 ---
 
@@ -69,7 +69,7 @@
 
 ```typescript
 const ComponentName = () => {
-    // ...
+  // ...
 };
 
 export default ComponentName;
@@ -77,11 +77,11 @@ export default ComponentName;
 
 **Rules:**
 
--   ❌ No ES6 classes
--   ❌ No `export function`
--   ✅ Naming: **PascalCase** for component
--   ✅ Always use `const componentName = () => {}`
--   ✅ Always use `export default ComponentName` at the end
+- ❌ No ES6 classes
+- ❌ No `export function`
+- ✅ Naming: **PascalCase** for component
+- ✅ Always use `const componentName = () => {}`
+- ✅ Always use `export default ComponentName` at the end
 
 ### Props
 
@@ -89,11 +89,11 @@ export default ComponentName;
 
 ```typescript
 type Props = {
-    products: Product[];
+  products: Product[];
 };
 
 const ProductList = ({ products }: Props) => {
-    // ...
+  // ...
 };
 
 export default ProductList;
@@ -101,25 +101,25 @@ export default ProductList;
 
 **Rules:**
 
--   ✅ Always use `type` for props (never `interface`)
+- ✅ Always use `type` for props (never `interface`)
 
 ### JSX
 
 **Minimal JSX:**
 
--   ❌ No network calls
--   ❌ No business logic
--   ❌ No heavy calculations
+- ❌ No network calls
+- ❌ No business logic
+- ❌ No heavy calculations
 
 **Conditions:**
 
--   ✅ Use `&&` or ternaries
--   ❌ Never `if` in JSX
+- ✅ Use `&&` or ternaries
+- ❌ Never `if` in JSX
 
 ### Files
 
--   **Extension:** `.tsx`
--   **Rule:** One file = one main component
+- **Extension:** `.tsx`
+- **Rule:** One file = one main component
 
 ---
 
@@ -127,9 +127,9 @@ export default ProductList;
 
 ### Rules
 
--   **One store = one UI state domain**: filters, modals, selection, theme, etc.
--   ❌ **No side effects** in stores
--   ❌ **No direct link** with Supabase, React Query, or business logic
+- **One store = one UI state domain**: filters, modals, selection, theme, etc.
+- ❌ **No side effects** in stores
+- ❌ **No direct link** with Supabase, React Query, or business logic
 
 ### Naming
 
@@ -139,8 +139,8 @@ export default ProductList;
 
 ```typescript
 export const useFilterStore = create<FilterState>((set) => ({
-    search: "",
-    setSearch: (v) => set({ search: v }),
+  search: "",
+  setSearch: (v) => set({ search: v }),
 }));
 ```
 
@@ -150,19 +150,19 @@ export const useFilterStore = create<FilterState>((set) => ({
 
 ### Rules
 
--   **One hook per resource**: `useProducts`, `useStockMovements`, etc.
--   **Explicit and stable queryKey**: `queryKey: ["products"]`
--   ❌ **Never direct Supabase call**: only execution of a usecase
--   ✅ **Always return**: `data`, `isLoading`, `error`
+- **One hook per resource**: `useProducts`, `useStockMovements`, etc.
+- **Explicit and stable queryKey**: `queryKey: ["products"]`
+- ❌ **Never direct Supabase call**: only execution of a usecase
+- ✅ **Always return**: `data`, `isLoading`, `error`
 
 ### Example
 
 ```typescript
 export function useProducts() {
-    return useQuery({
-        queryKey: ["products"],
-        queryFn: () => listProducts(productRepositorySupabase),
-    });
+  return useQuery({
+    queryKey: ["products"],
+    queryFn: () => listProducts(productRepositorySupabase),
+  });
 }
 ```
 
@@ -172,51 +172,51 @@ export function useProducts() {
 
 ### Types
 
--   **Business types** in `core/domain` and used everywhere via imports
--   ❌ **Prefixes prohibited**: no `IProduct`, `IUser`
--   ✅ **Prefer**: `Product`, `StockMovement`
+- **Business types** in `core/domain` and used everywhere via imports
+- ❌ **Prefixes prohibited**: no `IProduct`, `IUser`
+- ✅ **Prefer**: `Product`, `StockMovement`
 
 ### Interface vs Type vs Enum
 
 **Strict rules:**
 
--   ✅ **`interface`**: **ONLY** for classes
--   ✅ **`type`**: for everything else (props, objects, unions, intersections, etc.)
--   ✅ **`enum`**: for enumerated constants
+- ✅ **`interface`**: **ONLY** for classes
+- ✅ **`type`**: for everything else (props, objects, unions, intersections, etc.)
+- ✅ **`enum`**: for enumerated constants
 
 **Examples:**
 
 ```typescript
 // ✅ Interface only for classes
 interface IRepository {
-    list(): Promise<Product[]>;
+  list(): Promise<Product[]>;
 }
 
 class ProductRepository implements IRepository {
-    // ...
+  // ...
 }
 
 // ✅ Type for props, objects, etc.
 type Product = {
-    id: string;
-    name: string;
+  id: string;
+  name: string;
 };
 
 type Props = {
-    products: Product[];
+  products: Product[];
 };
 
 // ✅ Enum for constants
 enum ProductStatus {
-    ACTIVE = "active",
-    INACTIVE = "inactive",
+  ACTIVE = "active",
+  INACTIVE = "inactive",
 }
 ```
 
 ### Variables
 
--   **camelCase** for variables and functions
--   **PascalCase** for types / components
+- **camelCase** for variables and functions
+- **PascalCase** for types / components
 
 ### Files
 
@@ -233,13 +233,13 @@ enum ProductStatus {
 
 **Unit tests only for:**
 
--   `domain`
--   `usecases`
+- `domain`
+- `usecases`
 
 **UI Tests:**
 
--   ❌ No mandatory UI tests for page components
--   ✅ **Mandatory tests** for reusable components in `presentation/components/ui`
+- ❌ No mandatory UI tests for page components
+- ✅ **Mandatory tests** for reusable components in `presentation/components/ui`
 
 ---
 
@@ -257,18 +257,18 @@ enum ProductStatus {
 
 ### Rules
 
--   ✅ **Always remove** unused imports
+- ✅ **Always remove** unused imports
 
 ---
 
 ## 🔧 9. Quality & Best Practices
 
--   ✅ **Name functions** according to what they actually do
--   ✅ **Prefer pure functions**
--   ✅ **Split long components**
--   ✅ **Use `async/await`** rather than `.then()`
--   ✅ **Always type** return values of public functions
--   ✅ **Never ignore a network error** (always at least a `throw`)
+- ✅ **Name functions** according to what they actually do
+- ✅ **Prefer pure functions**
+- ✅ **Split long components**
+- ✅ **Use `async/await`** rather than `.then()`
+- ✅ **Always type** return values of public functions
+- ✅ **Never ignore a network error** (always at least a `throw`)
 
 ---
 

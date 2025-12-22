@@ -22,12 +22,12 @@ This document provides comprehensive guidance on using React Query (TanStack Que
 
 React Query (TanStack Query) is used for all server state management in this application. It provides:
 
--   **Automatic caching** - Reduces unnecessary network requests
--   **Background refetching** - Keeps data fresh automatically
--   **Request deduplication** - Prevents duplicate requests
--   **Optimistic updates** - Instant UI updates before server confirmation
--   **Error handling** - Built-in error states and retry logic
--   **Loading states** - Automatic loading state management
+- **Automatic caching** - Reduces unnecessary network requests
+- **Background refetching** - Keeps data fresh automatically
+- **Request deduplication** - Prevents duplicate requests
+- **Optimistic updates** - Instant UI updates before server confirmation
+- **Error handling** - Built-in error states and retry logic
+- **Loading states** - Automatic loading state management
 
 ### Data Flow
 
@@ -53,18 +53,18 @@ Supabase/External API
 
 ### Layer Responsibilities
 
--   **Domain** (`core/domain/`): Business types and pure logic (no React Query)
--   **Usecases** (`core/usecases/`): Business logic orchestration (no React Query)
--   **Infrastructure** (`infrastructure/`): Repository implementations (no React Query)
--   **Presentation** (`presentation/hooks/`): React Query hooks that call usecases
+- **Domain** (`core/domain/`): Business types and pure logic (no React Query)
+- **Usecases** (`core/usecases/`): Business logic orchestration (no React Query)
+- **Infrastructure** (`infrastructure/`): Repository implementations (no React Query)
+- **Presentation** (`presentation/hooks/`): React Query hooks that call usecases
 
 ### React Query Provider
 
 The `ReactQueryProvider` is already configured in `app/layout.tsx`. It provides:
 
--   Default query configuration (staleTime, gcTime, retry)
--   Default mutation configuration
--   DevTools in development environment
+- Default query configuration (staleTime, gcTime, retry)
+- Default mutation configuration
+- DevTools in development environment
 
 See `presentation/providers/ReactQueryProvider.tsx` for configuration details.
 
@@ -76,10 +76,10 @@ All query keys must be defined in `presentation/hooks/queryKeys.ts` using the ce
 
 ### Why Use a Query Key Factory?
 
--   **Type safety** - TypeScript autocomplete and type checking
--   **Consistency** - Single source of truth for all query keys
--   **Easy invalidation** - Invalidate related queries with hierarchical keys
--   **Refactoring** - Change keys in one place, update everywhere
+- **Type safety** - TypeScript autocomplete and type checking
+- **Consistency** - Single source of truth for all query keys
+- **Easy invalidation** - Invalidate related queries with hierarchical keys
+- **Refactoring** - Change keys in one place, update everywhere
 
 ### Structure
 
@@ -87,15 +87,15 @@ Query keys follow a hierarchical pattern: `["resource", "id", "filters"]`
 
 ```typescript
 export const queryKeys = {
-    auth: {
-        session: () => ["auth", "session"] as const,
-        user: () => ["auth", "user"] as const,
-    },
-    products: {
-        all: () => ["products"] as const,
-        detail: (id: string) => ["products", id] as const,
-        list: (filters?: ProductFilters) => ["products", "list", filters] as const,
-    },
+  auth: {
+    session: () => ["auth", "session"] as const,
+    user: () => ["auth", "user"] as const,
+  },
+  products: {
+    all: () => ["products"] as const,
+    detail: (id: string) => ["products", id] as const,
+    list: (filters?: ProductFilters) => ["products", "list", filters] as const,
+  },
 } as const;
 ```
 
@@ -106,8 +106,8 @@ import { queryKeys } from "./queryKeys";
 
 // In a query hook
 useQuery({
-    queryKey: queryKeys.auth.session(),
-    queryFn: () => getCurrentSession(repo),
+  queryKey: queryKeys.auth.session(),
+  queryFn: () => getCurrentSession(repo),
 });
 
 // Invalidate all auth queries
@@ -128,12 +128,12 @@ queryClient.invalidateQueries({ queryKey: queryKeys.auth.session() });
 
 ```typescript
 export const queryKeys = {
-    // ... existing keys
-    products: {
-        all: () => ["products"] as const,
-        detail: (id: string) => ["products", id] as const,
-        list: (filters?: ProductFilters) => ["products", "list", filters] as const,
-    },
+  // ... existing keys
+  products: {
+    all: () => ["products"] as const,
+    detail: (id: string) => ["products", id] as const,
+    list: (filters?: ProductFilters) => ["products", "list", filters] as const,
+  },
 } as const;
 ```
 
@@ -157,10 +157,10 @@ import { productRepositorySupabase } from "../../infrastructure/supabase/product
  * @returns {object} Query object with data, isLoading, error, refetch, etc.
  */
 export const useProducts = () => {
-    return useQuery({
-        queryKey: queryKeys.products.all(),
-        queryFn: () => listProducts(productRepositorySupabase),
-    });
+  return useQuery({
+    queryKey: queryKeys.products.all(),
+    queryFn: () => listProducts(productRepositorySupabase),
+  });
 };
 ```
 
@@ -174,11 +174,11 @@ export const useProducts = () => {
  * @returns {object} Query object with data, isLoading, error, refetch, etc.
  */
 export const useProduct = (productId: string) => {
-    return useQuery({
-        queryKey: queryKeys.products.detail(productId),
-        queryFn: () => getProduct(productRepositorySupabase, productId),
-        enabled: !!productId, // Only fetch if productId is provided
-    });
+  return useQuery({
+    queryKey: queryKeys.products.detail(productId),
+    queryFn: () => getProduct(productRepositorySupabase, productId),
+    enabled: !!productId, // Only fetch if productId is provided
+  });
 };
 ```
 
@@ -188,11 +188,11 @@ Use the `enabled` option to conditionally fetch data:
 
 ```typescript
 export const useUserProducts = (userId: string | null) => {
-    return useQuery({
-        queryKey: queryKeys.products.user(userId!),
-        queryFn: () => getUserProducts(productRepositorySupabase, userId!),
-        enabled: !!userId, // Only fetch if user is authenticated
-    });
+  return useQuery({
+    queryKey: queryKeys.products.user(userId!),
+    queryFn: () => getUserProducts(productRepositorySupabase, userId!),
+    enabled: !!userId, // Only fetch if user is authenticated
+  });
 };
 ```
 
@@ -200,15 +200,15 @@ export const useUserProducts = (userId: string | null) => {
 
 ```typescript
 type ProductFilters = {
-    type?: string; // Product type: SAC_BANANE, POCHETTE_ORDINATEUR, etc.
-    inStock?: boolean;
+  type?: string; // Product type: SAC_BANANE, POCHETTE_ORDINATEUR, etc.
+  inStock?: boolean;
 };
 
 export const useProductList = (filters?: ProductFilters) => {
-    return useQuery({
-        queryKey: queryKeys.products.list(filters),
-        queryFn: () => listProducts(productRepositorySupabase, filters),
-    });
+  return useQuery({
+    queryKey: queryKeys.products.list(filters),
+    queryFn: () => listProducts(productRepositorySupabase, filters),
+  });
 };
 ```
 
@@ -221,21 +221,21 @@ import { useEffect } from "react";
 import { useAuthStore } from "../stores/useAuthStore";
 
 export const useSession = () => {
-    const setSession = useAuthStore((state) => state.setSession);
+  const setSession = useAuthStore((state) => state.setSession);
 
-    const query = useQuery({
-        queryKey: queryKeys.auth.session(),
-        queryFn: () => getCurrentSession(authRepositorySupabase),
-    });
+  const query = useQuery({
+    queryKey: queryKeys.auth.session(),
+    queryFn: () => getCurrentSession(authRepositorySupabase),
+  });
 
-    // Sync with Zustand store when data changes
-    useEffect(() => {
-        if (query.data !== undefined) {
-            setSession(query.data);
-        }
-    }, [query.data, setSession]);
+  // Sync with Zustand store when data changes
+  useEffect(() => {
+    if (query.data !== undefined) {
+      setSession(query.data);
+    }
+  }, [query.data, setSession]);
 
-    return query;
+  return query;
 };
 ```
 
@@ -254,11 +254,11 @@ import { createProduct } from "../../core/usecases/products";
 import { productRepositorySupabase } from "../../infrastructure/supabase/productRepositorySupabase";
 
 type CreateProductInput = {
-    name: string;
-    type: string;
-    unitCost: number;
-    salePrice: number;
-    stock: number;
+  name: string;
+  type: string;
+  unitCost: number;
+  salePrice: number;
+  stock: number;
 };
 
 /**
@@ -267,15 +267,16 @@ type CreateProductInput = {
  * @returns {object} Mutation object with mutate, mutateAsync, data, isLoading, error, etc.
  */
 export const useCreateProduct = () => {
-    const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
-    return useMutation({
-        mutationFn: (input: CreateProductInput) => createProduct(productRepositorySupabase, input),
-        onSuccess: () => {
-            // Invalidate and refetch products list
-            queryClient.invalidateQueries({ queryKey: queryKeys.products.all() });
-        },
-    });
+  return useMutation({
+    mutationFn: (input: CreateProductInput) =>
+      createProduct(productRepositorySupabase, input),
+    onSuccess: () => {
+      // Invalidate and refetch products list
+      queryClient.invalidateQueries({ queryKey: queryKeys.products.all() });
+    },
+  });
 };
 ```
 
@@ -283,38 +284,49 @@ export const useCreateProduct = () => {
 
 ```typescript
 export const useUpdateProduct = () => {
-    const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
-    return useMutation({
-        mutationFn: ({ id, data }: { id: string; data: Partial<Product> }) => updateProduct(productRepositorySupabase, id, data),
-        onMutate: async ({ id, data }) => {
-            // Cancel outgoing refetches
-            await queryClient.cancelQueries({ queryKey: queryKeys.products.detail(id) });
+  return useMutation({
+    mutationFn: ({ id, data }: { id: string; data: Partial<Product> }) =>
+      updateProduct(productRepositorySupabase, id, data),
+    onMutate: async ({ id, data }) => {
+      // Cancel outgoing refetches
+      await queryClient.cancelQueries({
+        queryKey: queryKeys.products.detail(id),
+      });
 
-            // Snapshot previous value
-            const previousProduct = queryClient.getQueryData<Product>(queryKeys.products.detail(id));
+      // Snapshot previous value
+      const previousProduct = queryClient.getQueryData<Product>(
+        queryKeys.products.detail(id)
+      );
 
-            // Optimistically update
-            queryClient.setQueryData(queryKeys.products.detail(id), (old: Product) => ({
-                ...old,
-                ...data,
-            }));
+      // Optimistically update
+      queryClient.setQueryData(
+        queryKeys.products.detail(id),
+        (old: Product) => ({
+          ...old,
+          ...data,
+        })
+      );
 
-            return { previousProduct };
-        },
-        onError: (_error, _variables, context) => {
-            // Rollback on error
-            if (context?.previousProduct) {
-                queryClient.setQueryData(queryKeys.products.detail(_variables.id), context.previousProduct);
-            }
-        },
-        onSettled: (_data, _error, variables) => {
-            // Refetch to ensure consistency
-            queryClient.invalidateQueries({
-                queryKey: queryKeys.products.detail(variables.id),
-            });
-        },
-    });
+      return { previousProduct };
+    },
+    onError: (_error, _variables, context) => {
+      // Rollback on error
+      if (context?.previousProduct) {
+        queryClient.setQueryData(
+          queryKeys.products.detail(_variables.id),
+          context.previousProduct
+        );
+      }
+    },
+    onSettled: (_data, _error, variables) => {
+      // Refetch to ensure consistency
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.products.detail(variables.id),
+      });
+    },
+  });
 };
 ```
 
@@ -322,22 +334,22 @@ export const useUpdateProduct = () => {
 
 ```typescript
 export const useDeleteProduct = () => {
-    const queryClient = useQueryClient();
-    const setLoading = useProductStore((state) => state.setLoading);
+  const queryClient = useQueryClient();
+  const setLoading = useProductStore((state) => state.setLoading);
 
-    return useMutation({
-        mutationFn: (id: string) => deleteProduct(productRepositorySupabase, id),
-        onMutate: () => {
-            setLoading(true);
-        },
-        onSuccess: () => {
-            // Invalidate products list
-            queryClient.invalidateQueries({ queryKey: queryKeys.products.all() });
-        },
-        onSettled: () => {
-            setLoading(false);
-        },
-    });
+  return useMutation({
+    mutationFn: (id: string) => deleteProduct(productRepositorySupabase, id),
+    onMutate: () => {
+      setLoading(true);
+    },
+    onSuccess: () => {
+      // Invalidate products list
+      queryClient.invalidateQueries({ queryKey: queryKeys.products.all() });
+    },
+    onSettled: () => {
+      setLoading(false);
+    },
+  });
 };
 ```
 
@@ -345,22 +357,23 @@ export const useDeleteProduct = () => {
 
 ```typescript
 export const useSignIn = () => {
-    const queryClient = useQueryClient();
-    const setSession = useAuthStore((state) => state.setSession);
-    const setUser = useAuthStore((state) => state.setUser);
+  const queryClient = useQueryClient();
+  const setSession = useAuthStore((state) => state.setSession);
+  const setUser = useAuthStore((state) => state.setUser);
 
-    return useMutation({
-        mutationFn: (credentials: SignInCredentials) => signInUser(authRepositorySupabase, credentials),
-        onSuccess: (data) => {
-            // Update Zustand store
-            setSession(data.session);
-            setUser(data.user);
+  return useMutation({
+    mutationFn: (credentials: SignInCredentials) =>
+      signInUser(authRepositorySupabase, credentials),
+    onSuccess: (data) => {
+      // Update Zustand store
+      setSession(data.session);
+      setUser(data.user);
 
-            // Invalidate related queries
-            queryClient.invalidateQueries({ queryKey: queryKeys.auth.session() });
-            queryClient.invalidateQueries({ queryKey: queryKeys.auth.user() });
-        },
-    });
+      // Invalidate related queries
+      queryClient.invalidateQueries({ queryKey: queryKeys.auth.session() });
+      queryClient.invalidateQueries({ queryKey: queryKeys.auth.user() });
+    },
+  });
 };
 ```
 
@@ -374,8 +387,8 @@ export const useSignIn = () => {
 
 ```typescript
 useQuery({
-    queryKey: ["products", productId], // Inline key
-    queryFn: () => getProduct(repo, productId),
+  queryKey: ["products", productId], // Inline key
+  queryFn: () => getProduct(repo, productId),
 });
 ```
 
@@ -383,8 +396,8 @@ useQuery({
 
 ```typescript
 useQuery({
-    queryKey: queryKeys.products.detail(productId), // Factory key
-    queryFn: () => getProduct(repo, productId),
+  queryKey: queryKeys.products.detail(productId), // Factory key
+  queryFn: () => getProduct(repo, productId),
 });
 ```
 
@@ -394,8 +407,8 @@ useQuery({
 
 ```typescript
 useQuery({
-    queryKey: queryKeys.products.all(),
-    queryFn: () => productRepositorySupabase.list(), // Direct repository call
+  queryKey: queryKeys.products.all(),
+  queryFn: () => productRepositorySupabase.list(), // Direct repository call
 });
 ```
 
@@ -403,8 +416,8 @@ useQuery({
 
 ```typescript
 useQuery({
-    queryKey: queryKeys.products.all(),
-    queryFn: () => listProducts(productRepositorySupabase), // Through usecase
+  queryKey: queryKeys.products.all(),
+  queryFn: () => listProducts(productRepositorySupabase), // Through usecase
 });
 ```
 
@@ -414,8 +427,8 @@ useQuery({
 
 ```typescript
 useMutation({
-    mutationFn: (data) => createProduct(repo, data),
-    // Missing invalidation - UI won't update
+  mutationFn: (data) => createProduct(repo, data),
+  // Missing invalidation - UI won't update
 });
 ```
 
@@ -423,10 +436,10 @@ useMutation({
 
 ```typescript
 useMutation({
-    mutationFn: (data) => createProduct(repo, data),
-    onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: queryKeys.products.all() });
-    },
+  mutationFn: (data) => createProduct(repo, data),
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: queryKeys.products.all() });
+  },
 });
 ```
 
@@ -436,8 +449,8 @@ useMutation({
 
 ```typescript
 useQuery({
-    queryKey: queryKeys.products.all(),
-    queryFn: () => listProducts(repo), // No type information
+  queryKey: queryKeys.products.all(),
+  queryFn: () => listProducts(repo), // No type information
 });
 ```
 
@@ -445,8 +458,8 @@ useQuery({
 
 ```typescript
 useQuery<Product[], ProductError>({
-    queryKey: queryKeys.products.all(),
-    queryFn: () => listProducts(repo),
+  queryKey: queryKeys.products.all(),
+  queryFn: () => listProducts(repo),
 });
 ```
 
@@ -485,7 +498,7 @@ const { data } = useProducts();
 
 // With selector - only re-renders when product names change
 const { data: productNames } = useProducts({
-    select: (products) => products.map((p) => p.name),
+  select: (products) => products.map((p) => p.name),
 });
 ```
 
@@ -495,9 +508,9 @@ Override default staleTime for queries that don't change often:
 
 ```typescript
 useQuery({
-    queryKey: queryKeys.products.all(),
-    queryFn: () => listProducts(repo),
-    staleTime: 10 * 60 * 1000, // 10 minutes (longer than default 5 minutes)
+  queryKey: queryKeys.products.all(),
+  queryFn: () => listProducts(repo),
+  staleTime: 10 * 60 * 1000, // 10 minutes (longer than default 5 minutes)
 });
 ```
 
@@ -507,9 +520,9 @@ Prevent loading states when paginating:
 
 ```typescript
 useQuery({
-    queryKey: queryKeys.products.list({ page, limit }),
-    queryFn: () => listProducts(repo, { page, limit }),
-    keepPreviousData: true, // Show previous data while fetching new page
+  queryKey: queryKeys.products.list({ page, limit }),
+  queryFn: () => listProducts(repo, { page, limit }),
+  keepPreviousData: true, // Show previous data while fetching new page
 });
 ```
 
@@ -517,10 +530,10 @@ useQuery({
 
 ```typescript
 useQuery({
-    queryKey: queryKeys.products.detail(id),
-    queryFn: () => getProduct(repo, id),
-    refetchOnWindowFocus: false, // Don't refetch when window regains focus
-    refetchOnMount: false, // Don't refetch on component mount
+  queryKey: queryKeys.products.detail(id),
+  queryFn: () => getProduct(repo, id),
+  refetchOnWindowFocus: false, // Don't refetch when window regains focus
+  refetchOnMount: false, // Don't refetch on component mount
 });
 ```
 
@@ -546,15 +559,15 @@ Always type your errors properly:
 
 ```typescript
 type ProductError = {
-    message: string;
-    code: string;
+  message: string;
+  code: string;
 };
 
 export const useProducts = () => {
-    return useQuery<Product[], ProductError>({
-        queryKey: queryKeys.products.all(),
-        queryFn: () => listProducts(productRepositorySupabase),
-    });
+  return useQuery<Product[], ProductError>({
+    queryKey: queryKeys.products.all(),
+    queryFn: () => listProducts(productRepositorySupabase),
+  });
 };
 ```
 
@@ -575,13 +588,13 @@ if (error) {
 const createProduct = useCreateProduct();
 
 const handleCreate = async (data: CreateProductInput) => {
-    try {
-        await createProduct.mutateAsync(data);
-        // Success handling
-    } catch (error) {
-        // Error handling
-        console.error("Failed to create product:", error);
-    }
+  try {
+    await createProduct.mutateAsync(data);
+    // Success handling
+  } catch (error) {
+    // Error handling
+    console.error("Failed to create product:", error);
+  }
 };
 ```
 
@@ -591,9 +604,9 @@ const handleCreate = async (data: CreateProductInput) => {
 
 React Query provides multiple loading states:
 
--   `isLoading` - True when fetching for the first time (no cached data)
--   `isFetching` - True whenever a fetch is in progress (including background refetches)
--   `isPending` - True when mutation is pending (for mutations)
+- `isLoading` - True when fetching for the first time (no cached data)
+- `isFetching` - True whenever a fetch is in progress (including background refetches)
+- `isPending` - True when mutation is pending (for mutations)
 
 ### Query Loading States
 
@@ -634,7 +647,7 @@ const { mutate, isPending } = useCreateProduct();
 
 ```typescript
 onSuccess: () => {
-    queryClient.invalidateQueries({ queryKey: queryKeys.products.all() });
+  queryClient.invalidateQueries({ queryKey: queryKeys.products.all() });
 };
 ```
 
@@ -733,7 +746,7 @@ Test that query keys are correctly structured:
 import { queryKeys } from "./queryKeys";
 
 test("queryKeys.auth.session returns correct key", () => {
-    expect(queryKeys.auth.session()).toEqual(["auth", "session"]);
+  expect(queryKeys.auth.session()).toEqual(["auth", "session"]);
 });
 ```
 
@@ -741,20 +754,20 @@ test("queryKeys.auth.session returns correct key", () => {
 
 ## Additional Resources
 
--   [React Query Documentation](https://tanstack.com/query/latest)
--   [React Query DevTools](https://tanstack.com/query/latest/docs/react/devtools)
--   [Query Key Factory Pattern](https://tkdodo.eu/blog/effective-react-query-keys)
+- [React Query Documentation](https://tanstack.com/query/latest)
+- [React Query DevTools](https://tanstack.com/query/latest/docs/react/devtools)
+- [Query Key Factory Pattern](https://tkdodo.eu/blog/effective-react-query-keys)
 
 ---
 
 ## Summary
 
--   ✅ Always use the query key factory (`queryKeys`)
--   ✅ Call usecases, never repositories directly
--   ✅ Invalidate related queries after mutations
--   ✅ Handle loading and error states properly
--   ✅ Use TypeScript types for queries and mutations
--   ✅ Optimize with selectors and staleTime when needed
--   ✅ Follow Clean Architecture principles
+- ✅ Always use the query key factory (`queryKeys`)
+- ✅ Call usecases, never repositories directly
+- ✅ Invalidate related queries after mutations
+- ✅ Handle loading and error states properly
+- ✅ Use TypeScript types for queries and mutations
+- ✅ Optimize with selectors and staleTime when needed
+- ✅ Follow Clean Architecture principles
 
 For questions or clarifications, refer to existing hooks in `presentation/hooks/` or consult the React Query documentation.

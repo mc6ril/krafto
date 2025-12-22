@@ -13,33 +13,29 @@ Commit and push all staged or modified changes to the git repository. The comman
 ## Steps
 
 1. **Check Git Status**
-
-    - Show current git status
-    - List all modified, added, or deleted files
-    - Identify untracked files
+   - Show current git status
+   - List all modified, added, or deleted files
+   - Identify untracked files
 
 2. **Stage Changes**
-
-    - Add all modified files (`git add .`)
-    - Or stage specific files if needed
-    - Verify staged files
+   - Add all modified files (`git add .`)
+   - Or stage specific files if needed
+   - Verify staged files
 
 3. **Generate Commit Message** (if not provided)
-
-    - Analyze changes to determine type (feat, fix, refactor, docs, etc.)
-    - Create descriptive commit message following conventional commits format
-    - Include scope if applicable (e.g., `.cursor`, `rules`, `agents`)
+   - Analyze changes to determine type (feat, fix, refactor, docs, etc.)
+   - Create descriptive commit message following conventional commits format
+   - Include scope if applicable (e.g., `.cursor`, `rules`, `agents`)
 
 4. **Commit Changes**
-
-    - Create commit with generated or provided message
-    - Follow conventional commits format: `type(scope): description`
-    - Ensure message is clear and descriptive
+   - Create commit with generated or provided message
+   - Follow conventional commits format: `type(scope): description`
+   - Ensure message is clear and descriptive
 
 5. **Push to Remote**
-    - Push changes to current branch (default: `main`)
-    - Verify push success
-    - Open a pull request
+   - Push changes to current branch (default: `main`)
+   - Verify push success
+   - Open a pull request
 
 ## Commit Message Format
 
@@ -55,14 +51,14 @@ type(scope): description
 
 **Types**:
 
--   `feat`: New feature
--   `fix`: Bug fix
--   `refactor`: Code refactoring
--   `docs`: Documentation changes
--   `style`: Code style changes (formatting, etc.)
--   `test`: Test changes
--   `chore`: Maintenance tasks
--   `perf`: Performance improvements
+- `feat`: New feature
+- `fix`: Bug fix
+- `refactor`: Code refactoring
+- `docs`: Documentation changes
+- `style`: Code style changes (formatting, etc.)
+- `test`: Test changes
+- `chore`: Maintenance tasks
+- `perf`: Performance improvements
 
 **Examples**:
 
@@ -142,22 +138,22 @@ Commit message: feat: add new feature X
 
 ## Safety Checks
 
--   **NEVER** commit sensitive data (secrets, passwords, API keys)
--   **NEVER** commit `.env` files or environment variables
--   **ALWAYS** review staged changes before committing
--   **ALWAYS** ensure tests pass before pushing (if applicable)
--   **VERIFY** branch name before pushing (default: `main`)
+- **NEVER** commit sensitive data (secrets, passwords, API keys)
+- **NEVER** commit `.env` files or environment variables
+- **ALWAYS** review staged changes before committing
+- **ALWAYS** ensure tests pass before pushing (if applicable)
+- **VERIFY** branch name before pushing (default: `main`)
 
 ## Notes
 
--   If no changes are detected, the command will inform the user
--   If working directory is not clean, all changes will be staged
--   The command assumes the remote is already configured
--   For feature branches, the command pushes to the current branch
--   Always review the generated commit message before accepting
+- If no changes are detected, the command will inform the user
+- If working directory is not clean, all changes will be staged
+- The command assumes the remote is already configured
+- For feature branches, the command pushes to the current branch
+- Always review the generated commit message before accepting
 
 ## Related Commands
 
--   `/debug-issue`: Debug code issues
--   `/code-review`: Review code changes before commit
--   `/lint-fix`: Fix linting issues before commit
+- `/debug-issue`: Debug code issues
+- `/code-review`: Review code changes before commit
+- `/lint-fix`: Fix linting issues before commit

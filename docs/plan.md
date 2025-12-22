@@ -10,11 +10,11 @@ This document outlines the comprehensive development plan for Workbench, a perso
 
 | Area  | Sub Area            | Title                        | Description                                                                             | Status  |
 | ----- | ------------------- | ---------------------------- | --------------------------------------------------------------------------------------- | ------- |
-| Setup | Configuration       | TypeScript Configuration     | Configure TypeScript with strict mode, path aliases (@/), and proper compiler options   | Pending |
-| Setup | Configuration       | Next.js Configuration        | Setup Next.js App Router, TypeScript integration, and build configuration               | Pending |
-| Setup | Configuration       | ESLint Configuration         | Configure ESLint with Next.js preset and custom rules aligned with project conventions  | Pending |
-| Setup | Configuration       | Prettier Configuration       | Setup Prettier for code formatting with consistent rules                                | Pending |
-| Setup | Configuration       | Path Aliases                 | Configure path aliases (@/ for src/) in tsconfig.json and next.config                   | Pending |
+| Setup | Configuration       | TypeScript Configuration     | Configure TypeScript with strict mode, path aliases (@/), and proper compiler options   | Done    |
+| Setup | Configuration       | Next.js Configuration        | Setup Next.js App Router, TypeScript integration, and build configuration               | Done    |
+| Setup | Configuration       | ESLint Configuration         | Configure ESLint with Next.js preset and custom rules aligned with project conventions  | Done    |
+| Setup | Configuration       | Prettier Configuration       | Setup Prettier for code formatting with consistent rules                                | Done    |
+| Setup | Configuration       | Path Aliases                 | Configure path aliases (@/ for src/) in tsconfig.json and next.config                   | Done    |
 | Setup | Configuration       | Git Configuration            | Setup .gitignore, .gitattributes, and commit message conventions                        | Pending |
 | Setup | Dependencies        | Core Dependencies            | Install React, Next.js, TypeScript, and essential runtime dependencies                  | Pending |
 | Setup | Dependencies        | UI Dependencies              | Install React Query (@tanstack/react-query), Zustand for state management               | Pending |
@@ -492,7 +492,7 @@ This comprehensive plan covers all aspects of building a mature Workbench applic
 
 **Status Legend:**
 
--   **Pending**: Not started
--   **In Progress**: Currently being worked on
--   **Review**: Completed, awaiting review
--   **Done**: Completed and verified
+- **Pending**: Not started
+- **In Progress**: Currently being worked on
+- **Review**: Completed, awaiting review
+- **Done**: Completed and verified
