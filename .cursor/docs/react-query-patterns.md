@@ -1,6 +1,6 @@
 # React Query Patterns and Best Practices
 
-This document provides comprehensive guidance on using React Query (TanStack Query) in the Krafto project. It covers patterns, best practices, performance optimizations, and common pitfalls.
+This document provides comprehensive guidance on using React Query (TanStack Query) in this project. It covers patterns, best practices, performance optimizations, and common pitfalls.
 
 ## Table of Contents
 
@@ -20,7 +20,7 @@ This document provides comprehensive guidance on using React Query (TanStack Que
 
 ## Overview
 
-React Query (TanStack Query) is used for all server state management in the Krafto. It provides:
+React Query (TanStack Query) is used for all server state management in this application. It provides:
 
 -   **Automatic caching** - Reduces unnecessary network requests
 -   **Background refetching** - Keeps data fresh automatically

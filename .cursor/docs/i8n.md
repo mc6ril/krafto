@@ -1,6 +1,6 @@
 # i18n Translation System
 
-This directory contains the internationalization (i18n) infrastructure for the Krafto application. The system uses `next-intl` for translation management and provides type-safe translation keys and utilities.
+This directory contains the internationalization (i18n) infrastructure for this application. The system uses `next-intl` for translation management and provides type-safe translation keys and utilities.
 
 ## Structure
 

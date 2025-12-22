@@ -1,4 +1,4 @@
-# 🏗️ Clean Architecture — Dashboard Workshop
+# 🏗️ Clean Architecture
 
 ## 📌 Fundamental Principles
 
@@ -34,9 +34,9 @@ src/
 ├── app/                    # Next.js pages (App Router)
 │   ├── layout.tsx
 │   ├── page.tsx
-│   ├── stocks/
+│   ├── featureA/
 │   │   └── page.tsx
-│   └── products/
+│   └── featureB/
 │       └── [id]/
 │           └── page.tsx
 │
@@ -48,8 +48,6 @@ src/
 ├── infrastructure/         # Concrete implementations
 │   └── supabase/          # Concrete implementations of ports
 │       ├── client.ts
-│       ├── productRepositorySupabase.ts
-│       ├── stockMovementRepositorySupabase.ts
 │       └── utils/
 │
 ├── presentation/           # Presentation layer
@@ -60,7 +58,9 @@ src/
 │   └── providers/         # QueryClientProvider, other providers
 │
 ├── shared/                # Code shared between layers
-│   └── a11y/              # Accessibility (utilities, constants, helpers)
+│   └── a11y/              # Accessibility
+│   └── constants/         # Shared constants
+│   └── utils/             # shared utils functions
 │
 └── styles/                # Global styles
     ├── global.scss
@@ -77,8 +77,8 @@ src/
 
 **Contains:**
 
--   Business types/interfaces (Product, StockMovement)
--   Pure business rules (e.g., `isLowStock(product)`)
+-   Business types/interfaces
+-   Pure business rules
 
 **Must never import:**
 

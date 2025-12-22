@@ -58,7 +58,7 @@ The Jira Ticket Generator:
 5. **Create Git Branch** (If not already created)
 
     - Use the provided branch name from the ticket
-    - Create branch: `git checkout -b feat/krafto-{number}-{short-description}`
+    - Create branch: `git checkout -b feat/{projectKey}-{number}-{short-description}`
     - Start working on the feature
 
 6. **Copy to Jira** (Optional)
@@ -76,7 +76,7 @@ The generated ticket is **concise** and includes only essentials:
 -   **Priority**: High/Medium/Low
 -   **Story Points**: 1-13 estimation
 -   **Labels**: Relevant tags
--   **Git Branch**: Suggested branch name (format: `feat/krafto-{number}-{short-description}`)
+-   **Git Branch**: Suggested branch name (format: `feat/{projectKey}-{number}-{short-description}`)
 -   **Description**: 1-2 sentences (context and business value)
 -   **User Story**: One line (As a... I want... So that...)
 -   **Acceptance Criteria**: 3-5 testable, specific criteria (most important only)
@@ -99,7 +99,7 @@ results should be displayed in a table with pagination.
 The agent will generate a complete Jira ticket with:
 
 -   Title: "Add product search with filters and real-time results"
--   Git Branch: `feat/krafto-5-add-product-search` (example, actual number depends on existing tickets)
+-   Git Branch: `feat/APP-5-add-product-search` (example, actual number depends on existing tickets)
 -   User Story: As a user, I want to search products... So that I can quickly find what I need
 -   Acceptance Criteria: Search by name, category, stock status, real-time updates, pagination
 -   Technical Considerations: Domain (Product type), Usecases (searchProducts), Infrastructure (productRepositorySupabase), Presentation (SearchBar component, useProducts hook)
@@ -115,8 +115,8 @@ The agent will generate a complete Jira ticket with:
 
 ## Important Notes
 
--   **Git Branch**: Each ticket includes a suggested Git branch name following the format `feat/krafto-{number}-{short-description}`
--   **Branch Creation**: Create the branch before starting work using: `git checkout -b feat/krafto-{number}-{short-description}`
+-   **Git Branch**: Each ticket includes a suggested Git branch name following the format `feat/{projectKey}-{number}-{short-description}`
+-   **Branch Creation**: Create the branch before starting work using: `git checkout -b feat/{projectKey}-{number}-{short-description}`
 -   **Manual copy-paste**: The agent generates the ticket content, but you need to create it in Jira manually
 -   **Clean Architecture alignment**: All tickets reference the project's Clean Architecture structure
 -   **Testable criteria**: Acceptance criteria are written to be testable and specific

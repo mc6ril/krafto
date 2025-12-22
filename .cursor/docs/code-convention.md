@@ -1,4 +1,4 @@
-# 🧼 Code Conventions — Dashboard Workshop
+# 🧼 Code Conventions
 
 **Development standards and code style**
 

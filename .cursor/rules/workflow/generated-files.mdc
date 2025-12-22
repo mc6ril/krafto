@@ -88,23 +88,23 @@ report/{type}/{report-name}-{YYYY-MM-DD-HHMMSS}.md
 
 #### Planning Reports naming (project convention)
 
--   For planning artifacts, this project uses: `report/planning/plan-krafto-{ticketNumber}-{short-slug}.md`
+-   For planning artifacts, use: `report/planning/plan-{projectKey}-{ticketNumber}-{short-slug}.md`
 -   The `{ticketNumber}` matches the Jira ticket number saved in `jira/{number}.md`
--   Example: `report/planning/plan-krafto-5-light-design-system.md`
--   Timestamps are optional for planning reports in this repository and are not required.
+-   Example: `report/planning/plan-APP-5-light-design-system.md`
+-   Timestamps are optional for planning reports and are not required.
 
-When generating planning reports, prefer the `plan-krafto-{ticketNumber}-{slug}.md` naming to stay consistent with historical files.
+When generating planning reports, prefer the `plan-{projectKey}-{ticketNumber}-{slug}.md` naming to stay consistent with historical files.
 
 ##### Planning Reports header metadata (REQUIRED)
 
 All planning reports MUST include the following frontmatter keys:
 
-```
+```markdown
 ---
 Generated: {YYYY-MM-DD HH:MM:SS}
 Report Type: planning
 Command: pm-plan-from-ticket
-Ticket: krafto-{ticketNumber}
+Ticket: {projectKey}-{ticketNumber}
 ---
 ```
 

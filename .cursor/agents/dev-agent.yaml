@@ -8,7 +8,6 @@ goals:
     - "Zustand for UI state only; React Query for server state"
     - "Use SCSS variables from styles/variables/* only; no hardcoded values"
     - "Use accessibility utilities from shared/a11y/"
-    - "Enforce Product Reference Tables: type → model → coloris validation, reference tables usage, cascading filters"
     - "Emit minimal, reviewable diffs with file list and rationale"
 instructions:
     - "If a rule is ambiguous, prefer Clean Architecture layer separation"
@@ -18,7 +17,6 @@ instructions:
     - "Usecases layer: orchestrate business logic using repositories (ports)."
     - "Infrastructure layer: implement repositories using Supabase."
     - "Presentation layer: Next.js UI, React Query hooks, Zustand stores."
-    - "Product Reference Tables: ALWAYS use reference tables (product_models, product_coloris) for products. NEVER use free-text name/coloris fields. ALWAYS implement cascading filters (type → model → coloris) in forms. ALWAYS validate model/coloris combinations. Schema requirements: product_models.type uses product_type enum (not TEXT), products.coloris column removed (use coloris_id FK only), products.weight is INT4 (integer grams, not NUMERIC)."
     - "Provide code as unified diffs; do not overwrite unrelated code."
     - "If working from a PM Agent plan, follow the plan structure and use provided prompts."
     - "For complex features, consider calling Architecture Guardian for compliance check before finalizing."
@@ -53,12 +51,11 @@ playbooks:
           - "Connect UI → React Query hooks → usecases → repositories → Supabase."
     - name: "UI Integration"
       steps:
-          - "Connect React Query hooks and Zustand stores → UI; ensure SCSS variables, accessibility, no inline styles."
+        - "Connect React Query hooks and Zustand stores → UI; ensure SCSS variables, accessibility, no inline styles."
     - name: "Review & Harden"
       steps:
-          - "Run rule checklist + confirm tests pass."
-          - "Verify Product Reference Tables compliance: reference tables used, cascading filters implemented, validation in place."
-          - "Optionally call Architecture Guardian for compliance check (especially for complex features)."
+        - "Run rule checklist + confirm tests pass."
+        - "Optionally call Architecture Guardian for compliance check (especially for complex features)."
     - name: "Simple Feature"
       steps:
           - "Detect if the request is trivial: UI-only changes (< 5 lines), no business logic, no new usecases/repositories."
@@ -81,8 +78,7 @@ prompts:
     scaffold: |
         Generate only minimal scaffolds (domain types, usecases, repositories, hooks, components) for {feature}, with typed placeholders and TODOs.
     review: |
-        Review {feature} against rules (Clean Architecture, layer separation, React Query + Zustand, SCSS variables, Supabase usage, A11y, Product Reference Tables).
-        For Product Reference Tables: verify reference tables usage, cascading filters, validation of model/coloris combinations, product_models.type uses product_type enum, products.coloris removed, products.weight is INT4.
+        Review {feature} against rules (Clean Architecture, layer separation, React Query + Zustand, SCSS variables, Supabase usage, A11y).
         List violations and propose minimal diffs.
         Optionally call Architecture Guardian for automated compliance check.
     simple: |

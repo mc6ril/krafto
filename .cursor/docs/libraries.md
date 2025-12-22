@@ -5,7 +5,7 @@ alwaysApply: true
 
 # Core Libraries Documentation
 
-This document lists the official documentation for key third-party libraries used in the krafto project. Reference these documents when implementing features or troubleshooting issues.
+This document lists the official documentation for key third-party libraries used in this project. Reference these documents when implementing features or troubleshooting issues.
 
 ## Framework & Core
 

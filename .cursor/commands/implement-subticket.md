@@ -40,8 +40,8 @@ This command implements a sub-ticket from a planning document using the **Archit
 
 3. **Find planning document**:
 
-    - Search for: `report/planning/plan-krafto-{parentNumber}-*.md`
-    - Example: `report/planning/plan-krafto-20-add-product-coloris.md`
+    - Search for: `report/planning/plan-{projectKey}-{parentNumber}-*.md`
+    - Example: `report/planning/plan-APP-20-add-product-coloris.md`
 
 4. **Locate sub-ticket section**:
     - Find section: `### Sub-Ticket {ticket}`
@@ -59,7 +59,6 @@ This command implements a sub-ticket from a planning document using the **Archit
 
     - Follow Clean Architecture principles
     - Implement all Acceptance Criteria
-    - Verify Product Reference Tables compliance (if product-related): reference tables used, cascading filters implemented, validation in place
     - Run TypeScript compilation check
     - Fix linting errors
     - Run tests (if applicable)
@@ -105,7 +104,6 @@ Before marking DoD as complete, verify:
 -   [ ] All tests pass (if applicable)
 -   [ ] No linting errors
 -   [ ] Code follows Clean Architecture principles
--   [ ] Product Reference Tables compliance verified (if product-related): reference tables used, cascading filters implemented, validation in place, product_models.type uses product_type enum, products.coloris removed, products.weight is INT4
 -   [ ] JSDoc documentation updated (if applicable)
 -   [ ] Migration files created and tested (if applicable)
 
@@ -138,7 +136,7 @@ Before marking DoD as complete, verify:
 **Process:**
 
 1. Parse: ticket = "20.2", parent = "20"
-2. Find: `report/planning/plan-krafto-20-add-product-coloris.md`
+2. Find: `report/planning/plan-APP-20-add-product-coloris.md`
 3. Read: Sub-Ticket 20.2 section (database migration)
 4. Implement: Create migration file `002_add_coloris_to_products.sql`
 5. Verify: Migration syntax, follows conventions
@@ -154,7 +152,7 @@ Before marking DoD as complete, verify:
 
 ## Error Handling
 
--   If planning document not found: Search for `plan-krafto-{number}-*.md` files and list available options
+-   If planning document not found: Search for `plan-{projectKey}-{number}-*.md` files and list available options
 -   If sub-ticket not found: List available sub-tickets in the planning document
 -   If implementation fails: Do not update DoD, report errors to user
 -   If DoD update fails: Report error but keep implementation changes

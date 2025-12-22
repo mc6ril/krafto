@@ -1,6 +1,6 @@
 # Testing Guide
 
-This document provides detailed examples and patterns for writing unit tests in the Krafto application.
+This document provides detailed examples and patterns for writing unit tests in this application.
 
 ## Overview
 
