@@ -20,37 +20,37 @@ It is organized by major area: buyer experience, seller experience, payments, ad
 
 ## 1. Buyer Experience (Discovery → Purchase → Post‑purchase)
 
-| Area  | Sub‑area         | ID           | Task                                                             | Outcome                                                                                  | Priority |
-| ----- | ---------------- | ------------ | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | -------- |
-| Buyer | Home / Landing   | B-HOME-01    | Clarify key message and promises of Krafto for buyers            | A concise value proposition and 2–3 core promises are defined for the homepage           | Now      |
-| Buyer | Home / Landing   | B-HOME-02    | List content sections of the home page                           | Sections (hero, featured artisans, categories, collections, trust signals, CTAs) are set | Now      |
-| Buyer | Home / Landing   | B-HOME-03    | Define editorial rules for featured products and shops           | Clear rules exist for what can appear in “featured” (ethics, diversity, recency, etc.)   | Next     |
-| Buyer | Home / Landing   | B-HOME-04    | Define buyer CTAs (buy vs. sell) and their placement             | Primary and secondary CTAs and entry points to seller onboarding are decided             | Now      |
-| Buyer | Exploration      | B-EXPLORE-01 | List all filters and sort options for product search             | Full list of filters (price, category, location, style, etc.) and sort rules documented  | Now      |
-| Buyer | Exploration      | B-EXPLORE-02 | Define search result card information                            | What appears on each product card (photo, title, price, artisan, badges, location) set   | Now      |
-| Buyer | Exploration      | B-EXPLORE-03 | Define empty‑state behaviors for search and categories           | Copy and UX rules exist for “no results”, “adjust filters”, and suggested categories     | Next     |
-| Buyer | Categories       | B-CAT-01     | Define category taxonomy (top‑level and subcategories)           | A first version of the category tree for the marketplace is validated                    | Now      |
-| Buyer | Categories       | B-CAT-02     | Decide category ownership and governance                         | Who can create/edit categories and how changes are validated is defined                  | Later    |
-| Buyer | Product Page     | B-PROD-01    | Define product page sections and order                           | Structure (gallery, title, price, variants, details, reviews, shipping info) is fixed    | Now      |
-| Buyer | Product Page     | B-PROD-02    | Specify minimum information every listing must contain           | Mandatory fields (photos, dimensions, materials, processing time, return policy) set     | Now      |
-| Buyer | Product Page     | B-PROD-03    | Define rules for “related products” suggestions                  | Simple rules (same category, same artisan, similar price) are documented                 | Next     |
-| Buyer | Product Page     | B-PROD-04    | Define trust elements on product page                            | What trust badges, artisan info, verification status, and safeguards must be displayed   | Now      |
-| Buyer | Shop Page        | B-SHOP-01    | Define structure of an artisan shop page                         | Sections (intro, listings grid, reviews, policies, contact, location) are listed         | Now      |
-| Buyer | Shop Page        | B-SHOP-02    | Decide which shop customization options artisans have            | Rules on banner, logo, intro text, and links are set                                     | Next     |
-| Buyer | Shop Page        | B-SHOP-03    | Define “follow shop” behavior and expectations                   | What following means (notifications, favorites, newsletters) is clarified                | Later    |
-| Buyer | Cart             | B-CART-01    | Define cart behavior (per buyer, per device, guest vs logged in) | Functional rules of the cart (persistence, merging, multi‑shop) are written              | Now      |
-| Buyer | Cart             | B-CART-02    | Decide what information appears in cart line items               | Line item details (photo, title, options, shop, delivery estimate, fees) are listed      | Now      |
-| Buyer | Cart             | B-CART-03    | Define promo/gift card handling rules (MVP vs later)             | Decision taken on whether promos are in MVP and how they behave                          | Later    |
-| Buyer | Checkout         | B-CHK-01     | Define step‑by‑step buyer checkout flow                          | The exact sequence (address → shipping → payment → review) is specified                  | Now      |
-| Buyer | Checkout         | B-CHK-02     | Decide supported delivery address models (home, relay, local)    | MVP decision done on which delivery options are supported                                | Now      |
-| Buyer | Checkout         | B-CHK-03     | Define wording and validation rules for checkout errors          | List of possible user‑visible errors and how they are presented                          | Next     |
-| Buyer | Auth in checkout | B-AUTH-01    | Decide login requirements for checkout (guest vs account)        | Clear rule on whether guest checkout exists and when users must create an account        | Now      |
-| Buyer | Auth in checkout | B-AUTH-02    | Define passwordless / magic‑link strategy (MVP or later)         | Choice made and documented for authentication method in checkout                         | Later    |
-| Buyer | Account          | B-ACC-01     | List all sections of buyer account area                          | Sections (profile, orders, addresses, favorites, messages, reviews) are listed           | Now      |
-| Buyer | Account          | B-ACC-02     | Define what appears in order history list vs order detail        | Level of detail per screen is clearly decided                                            | Now      |
-| Buyer | Account          | B-ACC-03     | Define return/dispute flow for MVP vs later                      | Rules on how disputes/returns are handled (or not) at each phase are described           | Later    |
-| Buyer | Post‑purchase    | B-POST-01    | Define review system for products and shops                      | Rules on who can review, when, how many stars, and what content is allowed               | Next     |
-| Buyer | Post‑purchase    | B-POST-02    | Decide notification types after purchase                         | List of emails/notifications after purchase (confirmation, shipped, delivered, review)   | Next     |
+| Area  | Sub‑area         | ID           | Task                                                             | Outcome                                                                                  | Priority | Status |
+| ----- | ---------------- | ------------ | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | -------- | ------ |
+| Buyer | Home / Landing   | B-HOME-01    | Clarify key message and promises of Krafto for buyers            | A concise value proposition and 2–3 core promises are defined for the homepage           | Now      | done   |
+| Buyer | Home / Landing   | B-HOME-02    | List content sections of the home page                           | Sections (hero, featured artisans, categories, collections, trust signals, CTAs) are set | Now      | done   |
+| Buyer | Home / Landing   | B-HOME-03    | Define editorial rules for featured products and shops           | Clear rules exist for what can appear in “featured” (ethics, diversity, recency, etc.)   | Next     | to-do  |
+| Buyer | Home / Landing   | B-HOME-04    | Define buyer CTAs (buy vs. sell) and their placement             | Primary and secondary CTAs and entry points to seller onboarding are decided             | Now      | to-do  |
+| Buyer | Exploration      | B-EXPLORE-01 | List all filters and sort options for product search             | Full list of filters (price, category, location, style, etc.) and sort rules documented  | Now      | to-do  |
+| Buyer | Exploration      | B-EXPLORE-02 | Define search result card information                            | What appears on each product card (photo, title, price, artisan, badges, location) set   | Now      | to-do  |
+| Buyer | Exploration      | B-EXPLORE-03 | Define empty‑state behaviors for search and categories           | Copy and UX rules exist for “no results”, “adjust filters”, and suggested categories     | Next     | to-do  |
+| Buyer | Categories       | B-CAT-01     | Define category taxonomy (top‑level and subcategories)           | A first version of the category tree for the marketplace is validated                    | Now      | to-do  |
+| Buyer | Categories       | B-CAT-02     | Decide category ownership and governance                         | Who can create/edit categories and how changes are validated is defined                  | Later    | to-do  |
+| Buyer | Product Page     | B-PROD-01    | Define product page sections and order                           | Structure (gallery, title, price, variants, details, reviews, shipping info) is fixed    | Now      | to-do  |
+| Buyer | Product Page     | B-PROD-02    | Specify minimum information every listing must contain           | Mandatory fields (photos, dimensions, materials, processing time, return policy) set     | Now      | to-do  |
+| Buyer | Product Page     | B-PROD-03    | Define rules for “related products” suggestions                  | Simple rules (same category, same artisan, similar price) are documented                 | Next     | to-do  |
+| Buyer | Product Page     | B-PROD-04    | Define trust elements on product page                            | What trust badges, artisan info, verification status, and safeguards must be displayed   | Now      | to-do  |
+| Buyer | Shop Page        | B-SHOP-01    | Define structure of an artisan shop page                         | Sections (intro, listings grid, reviews, policies, contact, location) are listed         | Now      | to-do  |
+| Buyer | Shop Page        | B-SHOP-02    | Decide which shop customization options artisans have            | Rules on banner, logo, intro text, and links are set                                     | Next     | to-do  |
+| Buyer | Shop Page        | B-SHOP-03    | Define “follow shop” behavior and expectations                   | What following means (notifications, favorites, newsletters) is clarified                | Later    | to-do  |
+| Buyer | Cart             | B-CART-01    | Define cart behavior (per buyer, per device, guest vs logged in) | Functional rules of the cart (persistence, merging, multi‑shop) are written              | Now      | to-do  |
+| Buyer | Cart             | B-CART-02    | Decide what information appears in cart line items               | Line item details (photo, title, options, shop, delivery estimate, fees) are listed      | Now      | to-do  |
+| Buyer | Cart             | B-CART-03    | Define promo/gift card handling rules (MVP vs later)             | Decision taken on whether promos are in MVP and how they behave                          | Later    | to-do  |
+| Buyer | Checkout         | B-CHK-01     | Define step‑by‑step buyer checkout flow                          | The exact sequence (address → shipping → payment → review) is specified                  | Now      | to-do  |
+| Buyer | Checkout         | B-CHK-02     | Decide supported delivery address models (home, relay, local)    | MVP decision done on which delivery options are supported                                | Now      | to-do  |
+| Buyer | Checkout         | B-CHK-03     | Define wording and validation rules for checkout errors          | List of possible user‑visible errors and how they are presented                          | Next     | to-do  |
+| Buyer | Auth in checkout | B-AUTH-01    | Decide login requirements for checkout (guest vs account)        | Clear rule on whether guest checkout exists and when users must create an account        | Now      | to-do  |
+| Buyer | Auth in checkout | B-AUTH-02    | Define passwordless / magic‑link strategy (MVP or later)         | Choice made and documented for authentication method in checkout                         | Later    | to-do  |
+| Buyer | Account          | B-ACC-01     | List all sections of buyer account area                          | Sections (profile, orders, addresses, favorites, messages, reviews) are listed           | Now      | to-do  |
+| Buyer | Account          | B-ACC-02     | Define what appears in order history list vs order detail        | Level of detail per screen is clearly decided                                            | Now      | to-do  |
+| Buyer | Account          | B-ACC-03     | Define return/dispute flow for MVP vs later                      | Rules on how disputes/returns are handled (or not) at each phase are described           | Later    | to-do  |
+| Buyer | Post‑purchase    | B-POST-01    | Define review system for products and shops                      | Rules on who can review, when, how many stars, and what content is allowed               | Next     | to-do  |
+| Buyer | Post‑purchase    | B-POST-02    | Decide notification types after purchase                         | List of emails/notifications after purchase (confirmation, shipped, delivered, review)   | Next     | to-do  |
 
 ---
 
