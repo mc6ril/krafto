@@ -2,7 +2,7 @@ import type { Config } from "jest";
 
 const config: Config = {
   preset: "ts-jest",
-  testEnvironment: "node",
+  testEnvironment: "jsdom",
   roots: ["<rootDir>/__tests__"],
   testMatch: ["**/*.test.ts", "**/*.test.tsx"],
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
@@ -11,6 +11,7 @@ const config: Config = {
     "^.+\\.(css|scss|sass)$": "<rootDir>/__mocks__/styleMock.ts",
     "^.+\\.(gif|jpg|jpeg|png|svg|webp)$": "<rootDir>/__mocks__/fileMock.ts",
   },
+  setupFilesAfterEnv: ["<rootDir>/__tests__/setupTests.ts"],
   collectCoverage: true,
   collectCoverageFrom: [
     "src/core/domain/**/*.{ts,tsx}",
