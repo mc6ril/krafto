@@ -3,7 +3,7 @@ import type {
   AuthSession,
   SignInInput,
   SignUpInput,
-} from "@/core/domain/auth/auth.schema";
+} from "@/core/domain/auth.schema";
 
 /**
  * Repository contract for Authentication operations.
