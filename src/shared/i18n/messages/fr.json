@@ -1,6 +1,7 @@
 {
   "common": {
     "loading": "Chargement en cours...",
+    "loadingAriaLabel": "Chargement du contenu",
     "email": "Email",
     "password": "Mot de passe",
     "signIn": "Se connecter",

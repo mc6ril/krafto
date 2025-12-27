@@ -12,6 +12,7 @@ import type { UpdatePasswordInput } from "@/core/domain/auth.schema";
 
 import Button from "@/presentation/components/ui/Button";
 import Input from "@/presentation/components/ui/Input";
+import Loader from "@/presentation/components/ui/Loader";
 import { useUpdatePassword } from "@/presentation/hooks";
 
 import { useTranslation } from "@/shared/i18n";
@@ -46,9 +47,7 @@ const UpdatePasswordPage = () => {
     <Suspense
       fallback={
         <div className={styles["update-password-page"]}>
-          <div className={styles["update-password-container"]}>
-            <p>{tCommon("loading")}</p>
-          </div>
+          <Loader variant="inline" />
         </div>
       }
     >
@@ -241,15 +240,7 @@ const UpdatePasswordContent = () => {
           />
         </form>
 
-        {updatePasswordMutation.isPending && (
-          <div
-            className={styles["update-password-loading"]}
-            role="status"
-            aria-live="polite"
-          >
-            <p>{tCommon("loading")}</p>
-          </div>
-        )}
+        {updatePasswordMutation.isPending && <Loader variant="inline" />}
 
         {updatePasswordMutation.isSuccess &&
           updatePasswordMutation.data?.session && (

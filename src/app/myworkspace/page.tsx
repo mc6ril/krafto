@@ -12,6 +12,7 @@ import { CreateProjectInputSchema } from "@/core/domain/project.schema";
 
 import Button from "@/presentation/components/ui/Button";
 import Input from "@/presentation/components/ui/Input";
+import Loader from "@/presentation/components/ui/Loader";
 import {
   useAddUserToProject,
   useCreateProject,
@@ -138,9 +139,7 @@ export default function MyWorkspace() {
   if (isInitialLoad) {
     return (
       <main className={styles["home-page"]}>
-        <div className={styles["home-container"]}>
-          <p>{t("loading")}</p>
-        </div>
+        <Loader variant="full-page" />
       </main>
     );
   }
@@ -338,7 +337,7 @@ export default function MyWorkspace() {
             </p>
           )}
           {isLoadingProjects || addUserToProjectMutation.isPending ? (
-            <p className={styles["home-loading"]}>{t("loadingProjects")}</p>
+            <Loader variant="inline" />
           ) : Array.isArray(projects) && projects.length > 0 ? (
             <ul className={styles["home-projects-list"]}>
               {projects.map((project) => {
