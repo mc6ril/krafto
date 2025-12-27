@@ -1,6 +1,8 @@
 "use client";
 
+import { Suspense, useEffect } from "react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import Button from "@/presentation/components/ui/Button";
 
@@ -8,9 +10,21 @@ import { useTranslation } from "@/shared/i18n";
 
 import styles from "./LandingPage.module.scss";
 
-export default function LandingPage() {
+const LandingPageContent = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const t = useTranslation("pages.landing");
   const tCommon = useTranslation("common");
+
+  // Handle Supabase email verification code redirect
+  // Supabase redirects to /?code=... instead of /auth/verify-email?token=...
+  useEffect(() => {
+    const code = searchParams.get("code");
+    if (code) {
+      // Redirect to verify-email page with code parameter
+      router.replace(`/auth/verify-email?code=${encodeURIComponent(code)}`);
+    }
+  }, [searchParams, router]);
 
   return (
     <main className={styles["landing-page"]}>
@@ -25,9 +39,7 @@ export default function LandingPage() {
             <h2 className={styles["landing-section-title"]}>
               {t("purposeTitle")}
             </h2>
-            <p className={styles["landing-section-text"]}>
-              {t("purposeText")}
-            </p>
+            <p className={styles["landing-section-text"]}>{t("purposeText")}</p>
           </section>
 
           <section className={styles["landing-section"]}>
@@ -45,20 +57,21 @@ export default function LandingPage() {
                 <strong>{t("epicsLabel")}</strong>: {t("epicsDescription")}
               </li>
               <li>
-                <strong>{t("subtasksLabel")}</strong>: {t("subtasksDescription")}
+                <strong>{t("subtasksLabel")}</strong>:{" "}
+                {t("subtasksDescription")}
               </li>
             </ul>
           </section>
 
           <div className={styles["landing-actions"]}>
-            <Link href="/signin">
+            <Link href="/auth/signin">
               <Button
                 label={tCommon("signIn")}
                 onClick={() => {}}
                 aria-label={tCommon("signIn")}
               />
             </Link>
-            <Link href="/signup">
+            <Link href="/auth/signup">
               <Button
                 label={tCommon("signUp")}
                 variant="secondary"
@@ -70,5 +83,15 @@ export default function LandingPage() {
         </div>
       </div>
     </main>
+  );
+};
+
+export default function LandingPage() {
+  const tCommon = useTranslation("common");
+
+  return (
+    <Suspense fallback={<div>{tCommon("loading")}</div>}>
+      <LandingPageContent />
+    </Suspense>
   );
 }
