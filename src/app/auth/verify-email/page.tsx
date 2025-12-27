@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import { useVerifyEmail } from "@/presentation/hooks";
 
+import Loader from "@/presentation/components/ui/Loader";
 import { useTranslation } from "@/shared/i18n";
 
 import styles from "./VerifyEmailPage.module.scss";
@@ -17,9 +18,7 @@ const VerifyEmailPage = () => {
     <Suspense
       fallback={
         <div className={styles["verify-email-page"]}>
-          <div className={styles["verify-email-container"]}>
-            <p>{tCommon("loading")}</p>
-          </div>
+          <Loader variant="inline" />
         </div>
       }
     >
@@ -147,15 +146,7 @@ const VerifyEmailContent = () => {
       <div className={styles["verify-email-container"]}>
         <h1 className={styles["verify-email-title"]}>{t("title")}</h1>
 
-        {verifyEmailMutation.isPending && (
-          <div
-            className={styles["verify-email-loading"]}
-            role="status"
-            aria-live="polite"
-          >
-            <p>{tCommon("loading")}</p>
-          </div>
-        )}
+        {verifyEmailMutation.isPending && <Loader variant="inline" />}
 
         {errorMessage && (
           <div className={styles["verify-email-error"]} role="alert">
