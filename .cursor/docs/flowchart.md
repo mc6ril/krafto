@@ -13,7 +13,7 @@ This document contains Mermaid diagrams representing the application architectur
   - **Edit access**: Only users with `admin` or `member` roles can create, update, or delete data
   - **Admin access**: Only users with `admin` role can delete projects or manage project members
 
-See `docs/row-level-security.md` for detailed information about RLS policies and permissions.
+See `docs/supabase/row-level-security.md` for detailed information about RLS policies and permissions.
 
 ## 1. Global Sitemap
 

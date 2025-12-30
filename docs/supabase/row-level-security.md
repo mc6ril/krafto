@@ -6,6 +6,8 @@ This document describes the Row Level Security policies and permission system fo
 
 Workbench uses Supabase Row Level Security (RLS) to restrict database access to authorized users only. All tables are protected by RLS policies that ensure users can only access and modify data for projects where they are members.
 
+Workbench supports both professional and personal projects. The same permission system applies regardless of project type: users must be authenticated and have project membership to access project data. Projects can be professional (development, business) or personal (vacations, home, hobbies), but the security model remains consistent.
+
 ## Project Membership System
 
 ### Project Members Table

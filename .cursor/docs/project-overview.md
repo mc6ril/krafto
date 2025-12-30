@@ -1,16 +1,19 @@
-# Project Overview — Workbench (Personal Jira-like)
+# Project Overview — Workbench
 
 ## 1. Purpose
 
-**Workbench** is a lightweight, personal task and project management tool inspired by Jira, designed to help a single user manage work **clearly, progressively, and without cognitive overload**.
+**Workbench** is a modular project space designed to help individuals and teams transform ideas into concrete projects and see them through to completion.
 
-The goal is **not** to replicate Jira, but to provide:
+**Tagline**: *"A space to transform an idea into a concrete project, and carry it through to completion — alone or together."*
 
-- a clean backlog,
-- a visual board (Trello-like),
-- and structured planning via Epics and sub-tasks,
+Workbench provides a structured environment where projects (professional or personal) can be managed with clarity, visibility, and collaboration. Each project is a context with participants and activated views (Board, Backlog, Epics, Budget, Notes, Checklist, etc.).
 
-all built **incrementally, Workbench by Workbench**.
+The goal is **not** to replace enterprise tools like Jira, nor to become a generic task manager. Instead, Workbench focuses on:
+
+- Simple structure and clear visibility
+- Solid permissions and collaboration
+- Modular views activated per project
+- Support for both professional and personal projects
 
 ---
 
@@ -21,20 +24,27 @@ all built **incrementally, Workbench by Workbench**.
    - Access is restricted to project members only
    - Edit/delete permissions are role-based (admin or member)
 
-2. **Personal-first**
-   - Designed for single user or small teams
-   - Role-based permissions for collaboration (admin, member, viewer)
+2. **Project-first**
+   - Projects can be professional (development, business) or personal (vacations, home, hobbies)
+   - Each project is a self-contained space with its own participants and views
+   - Role-based permissions enable collaboration (admin, member, viewer)
 
-3. **Incremental construction**
+3. **Modular views**
+   - Views (Board, Backlog, Epics, Budget, Notes, Checklist) are activated per project
+   - Not all projects need all views
+   - Each view serves a specific purpose in project management
+
+4. **Incremental construction**
    - One feature = one vertical slice
    - Each slice is usable on its own
+   - Built progressively, feature by feature
 
-4. **Clarity over power**
-   - Fewer features
-   - Explicit structure
+5. **Clarity over power**
+   - Fewer features, explicit structure
    - No hidden magic
+   - Every feature has a clear purpose
 
-5. **Domain-driven**
+6. **Domain-driven**
    - Clear concepts
    - Stable domain model
    - UI reflects the domain, not the opposite
@@ -43,9 +53,31 @@ all built **incrementally, Workbench by Workbench**.
 
 ## 3. Core Features (MVP Scope)
 
-### 3.1 Backlog
+### 3.1 Projects
 
-The backlog is the foundation of the system.
+Projects are the foundation of Workbench. Each project represents a context (professional or personal) with:
+- Participants (members with roles: admin, member, viewer)
+- Activated views (Board, Backlog, Epics, etc.)
+- Permissions and access control
+
+**Capabilities**
+
+- Create projects (professional or personal)
+- Manage project members and roles
+- Activate/deactivate views per project
+- Configure project settings
+
+**Rules**
+
+- Users must be authenticated to create or access projects
+- Project membership is required to view or interact with project data
+- Project creators are automatically assigned the `admin` role
+
+---
+
+### 3.2 Backlog
+
+The backlog is a view for managing all project items in a flat list.
 
 **Capabilities**
 
@@ -62,9 +94,9 @@ The backlog is the foundation of the system.
 
 ---
 
-### 3.2 Board (Trello-like)
+### 3.3 Board
 
-The board is a **visual representation** of tickets.
+The board is a **visual representation** of tickets organized by status columns.
 
 **Capabilities**
 
@@ -81,9 +113,9 @@ The board is a **visual representation** of tickets.
 
 ---
 
-### 3.3 Epics
+### 3.4 Epics
 
-Epics provide long-term structure and grouping.
+Epics provide long-term structure and grouping for related tickets.
 
 **Capabilities**
 
@@ -99,9 +131,9 @@ Epics provide long-term structure and grouping.
 
 ---
 
-### 3.4 Sub-tasks
+### 3.5 Sub-tasks
 
-Sub-tasks allow hierarchical decomposition.
+Sub-tasks allow hierarchical decomposition of work.
 
 **Capabilities**
 
@@ -137,16 +169,20 @@ Sub-tasks allow hierarchical decomposition.
   - Delete projects
   - Manage project members (add/remove users, change roles)
 
-See `docs/row-level-security.md` for detailed information about RLS policies and permissions.
+See `docs/supabase/row-level-security.md` for detailed information about RLS policies and permissions.
+
+---
 
 ## 5. Non-Goals (Explicitly Out of Scope)
 
-- Multi-project management (single project assumption for MVP)
-- Notifications
-- Comments or mentions
-- Time tracking
-- Sprint management
-- Reports or burndown charts
+- **Replace Jira in enterprise**: Workbench is not designed to compete with enterprise project management tools
+- **Do everything like Notion**: Workbench focuses on project management, not general knowledge management
+- **Become a generic task tool**: Workbench is project-centric, not task-centric
+- Notifications (may be considered later)
+- Comments or mentions (may be considered later)
+- Time tracking (may be considered later)
+- Sprint management (may be considered later)
+- Reports or burndown charts (may be considered later)
 
 These may be considered **only after** the core is stable.
 
@@ -156,11 +192,11 @@ These may be considered **only after** the core is stable.
 
 ### Entities
 
-- **Project**
-- **Ticket**
-- **Epic**
-- **Board**
-- **Column**
+- **Project** - A context (pro/perso) with participants and activated views
+- **Ticket** - A work item within a project
+- **Epic** - A grouping of related tickets
+- **Board** - A visual representation of tickets organized by status
+- **Column** - A status column in a board
 
 ### Relationships
 
@@ -211,11 +247,12 @@ Each feature is implemented as a **complete vertical slice**:
 ### Order of Implementation
 
 1. Project setup and health check
-2. Backlog (ticket CRUD)
-3. Board columns configuration
-4. Drag and drop workflow
-5. Epics
-6. Sub-tasks
+2. Projects (create, list, access control)
+3. Backlog (ticket CRUD)
+4. Board columns configuration
+5. Drag and drop workflow
+6. Epics
+7. Sub-tasks
 
 No feature is started until the previous one is **fully done**.
 
@@ -225,27 +262,27 @@ No feature is started until the previous one is **fully done**.
 
 Workbench is successful if:
 
-- It replaces ad-hoc notes and mental tracking
-- Managing tasks feels calm and predictable
+- It helps users transform ideas into structured projects
+- Managing projects feels calm and predictable
 - The system remains understandable after months away
 - Every feature has a clear reason to exist
+- Both professional and personal projects are well-supported
 
 ---
 
 ## 10. Long-Term Vision (Optional)
 
-If Workbench grows beyond personal use:
+If Workbench grows beyond the MVP:
 
-- Multiple projects
-- Templates
-- Persistence sync
-- Collaboration
-- Plugin system
+- Additional views (Budget, Notes, Checklist)
+- Project templates
+- Enhanced collaboration features
+- Advanced permissions and workflows
 
-But **only** if the personal version remains simple and solid.
+But **only** if the core remains simple and solid.
 
 ---
 
 ## 11. One-Sentence Summary
 
-> **Workbench is a personal project management tool built incrementally, where every feature earns its place and nothing exists without purpose.**
+> **Workbench is a modular project space built incrementally, where every feature earns its place and nothing exists without purpose.**

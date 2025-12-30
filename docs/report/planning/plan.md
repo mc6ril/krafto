@@ -1,6 +1,6 @@
 # Workbench Development Plan
 
-This document outlines the comprehensive development plan for Workbench, a personal Jira-like task management application.
+This document outlines the comprehensive development plan for Workbench, a modular project space for managing professional and personal projects.
 
 ---
 
