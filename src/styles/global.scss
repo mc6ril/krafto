@@ -7,6 +7,7 @@
 @use "@/styles/variables/typography" as *;
 @use "@/styles/variables/spacing" as *;
 @use "@/styles/variables/borders" as *;
+@use "@/styles/variables/animations" as *;
 
 // ============================================================================
 // CSS Reset
@@ -157,7 +158,7 @@ p {
 a {
   color: inherit;
   text-decoration: none;
-  transition: color 0.2s ease-in-out;
+  transition: $transition-color;
 
   &:hover {
     text-decoration: underline;
