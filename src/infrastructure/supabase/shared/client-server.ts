@@ -53,12 +53,30 @@ export const createSupabaseServerClient = async () => {
             });
           } catch (error) {
             // The `setAll` method was called from a Server Component.
-            // This can be ignored if you have middleware refreshing
-            // user sessions.
-            console.warn(
-              "[Supabase Server Client] Failed to set cookies in Server Component:",
-              error
-            );
+            // This is expected behavior in Next.js App Router - cookies can only be
+            // modified in Server Actions or Route Handlers, not in Server Components.
+            // This is safe to ignore because:
+            // 1. Middleware handles session refresh (can modify cookies)
+            // 2. Server Components can still read sessions (getAll works)
+            // 3. Session refresh will happen in middleware on subsequent requests
+            // Only log in development for debugging, suppress in production
+            if (
+              process.env.NODE_ENV === "development" &&
+              error instanceof Error &&
+              error.message.includes("Cookies can only be modified")
+            ) {
+              // Suppress expected warning - middleware handles session refresh
+              // Uncomment below for debugging if needed:
+              // console.debug(
+              //   "[Supabase Server Client] Cookie refresh attempted in Server Component (expected, handled by middleware)"
+              // );
+            } else {
+              // Log unexpected errors
+              console.warn(
+                "[Supabase Server Client] Failed to set cookies in Server Component:",
+                error
+              );
+            }
           }
         },
       },
